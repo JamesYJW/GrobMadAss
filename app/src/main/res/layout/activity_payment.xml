@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PaymentActivity">
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3.00"
+        app:layout_constraintBottom_toBottomOf="@+id/baseFare"
+        app:layout_constraintStart_toEndOf="@+id/baseFare"
+        app:layout_constraintTop_toTopOf="@+id/baseFare" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="247dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="93dp" />
+
+    <TextView
+        android:id="@+id/pricingHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Payment"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <TextView
+        android:id="@+id/CarType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Car"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/pricingHeading" />
+
+    <TextView
+        android:id="@+id/EsDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Distance"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/CarType" />
+
+    <TextView
+        android:id="@+id/EsTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Estimeated time"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/EsDistance" />
+
+    <TextView
+        android:id="@+id/EsCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Estimeated Cost"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/EsTime" />
+
+    <TextView
+        android:id="@+id/textView_pricing_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Toyota Vios"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/CarType"
+        app:layout_constraintStart_toEndOf="@+id/CarType"
+        app:layout_constraintTop_toTopOf="@+id/CarType" />
+
+    <TextView
+        android:id="@+id/textView_pricing_KM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="10.5 "
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/EsDistance"
+        app:layout_constraintStart_toEndOf="@+id/EsDistance"
+        app:layout_constraintTop_toTopOf="@+id/EsDistance" />
+
+    <TextView
+        android:id="@+id/km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/KM"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_pricing_KM"
+        app:layout_constraintStart_toEndOf="@+id/textView_pricing_KM"
+        app:layout_constraintTop_toTopOf="@+id/textView_pricing_KM" />
+
+    <TextView
+        android:id="@+id/textView_pricing_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="10"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/EsTime"
+        app:layout_constraintStart_toEndOf="@+id/EsTime"
+        app:layout_constraintTop_toTopOf="@+id/EsTime" />
+
+    <TextView
+        android:id="@+id/minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="minutes"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_pricing_time"
+        app:layout_constraintStart_toEndOf="@+id/textView_pricing_time"
+        app:layout_constraintTop_toTopOf="@+id/textView_pricing_time" />
+
+    <TextView
+        android:id="@+id/RM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="RM"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/EsCost"
+        app:layout_constraintStart_toEndOf="@+id/EsCost"
+        app:layout_constraintTop_toTopOf="@+id/EsCost" />
+
+    <TextView
+        android:id="@+id/textView_pricing_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12.00"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/RM"
+        app:layout_constraintStart_toEndOf="@+id/RM"
+        app:layout_constraintTop_toTopOf="@+id/RM" />
+
+    <TextView
+        android:id="@+id/baseFare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Base Fare RM"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EsCost" />
+
+    <TextView
+        android:id="@+id/perKm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Per KM RM"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baseFare" />
+
+    <TextView
+        android:id="@+id/perKMcost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.70-0.90"
+        app:layout_constraintBottom_toBottomOf="@+id/perKm"
+        app:layout_constraintStart_toEndOf="@+id/perKm"
+        app:layout_constraintTop_toTopOf="@+id/perKm" />
+
+    <TextView
+        android:id="@+id/applypromocodeField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/Pink"
+        android:paddingStart="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:text="Apply Promo Code ?"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/perKm" />
+
+    <ImageView
+        android:id="@+id/btn_apply_promo_code_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/applypromocodeField"
+        app:layout_constraintEnd_toEndOf="@+id/applypromocodeField"
+        app:layout_constraintTop_toTopOf="@+id/applypromocodeField"
+        app:srcCompat="@drawable/add_promo_icon" />
+
+    <Button
+        android:id="@+id/btn_make_payment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="MAKE PAYMENT"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="202dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.732"
+        app:srcCompat="@drawable/icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
