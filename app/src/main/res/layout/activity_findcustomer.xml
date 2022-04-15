@@ -27,17 +27,18 @@
         android:text="Private Car"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rvPrivateCar"
+        app:layout_constraintBottom_toTopOf="@+id/rvPrivateCar_FCA"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Carpooling" />
+        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_FCA" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPrivateCar"
+        android:id="@+id/rvPrivateCar_FCA"
         android:layout_width="0dp"
         android:layout_height="230dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,7 +55,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvPrivateCar"
+        app:layout_constraintTop_toBottomOf="@+id/rvPrivateCar_FCA"
         app:layout_constraintVertical_bias="0.112" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCarpooling_FCA"
+        android:layout_width="0dp"
+        android:layout_height="230dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Carpooling"
+        tools:listitem="@layout/carpoolingcutomer_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

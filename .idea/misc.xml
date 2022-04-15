@@ -3,14 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_carpooling_car.xml" value="0.22832980972515857" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_driver_pending.xml" value="0.31666666666666665" />
         <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_findcustomer.xml" value="0.4" />
         <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_main.xml" value="0.31666666666666665" />
         <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_payment.xml" value="0.31666666666666665" />
         <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_payment_summary.xml" value="0.31666666666666665" />
-        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_private_car.xml" value="0.264" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_private_car.xml" value="0.4417758369723435" />
         <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/activity_promo_code.xml" value="0.31666666666666665" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/carpoolingcarpage_view.xml" value="0.6" />
         <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/carpoolingcustomer_view.xml" value="0.8" />
-        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/privatecarcustomer_view.xml" value="0.8" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/carpoolingcutomer_view.xml" value="0.31666666666666665" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/layout/privatecarcustomer_view.xml" value="0.4" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.33697916666666666" />
+        <entry key="..\:/Users/james yow jun wei/Desktop/GrobMadAss/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.33697916666666666" />
       </map>
     </option>
   </component>

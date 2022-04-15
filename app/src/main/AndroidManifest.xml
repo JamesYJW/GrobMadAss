@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrobMadAss">
         <activity
+            android:name=".CarpoolingCarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DriverPendingActivity"
+            android:exported="false" />
+        <activity
             android:name=".PrivateCarActivity"
             android:exported="false" />
         <activity
