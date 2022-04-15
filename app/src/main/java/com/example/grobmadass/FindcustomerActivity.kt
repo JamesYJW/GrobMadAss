@@ -10,6 +10,7 @@ class FindcustomerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFindcustomerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityFindcustomerBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_findcustomer)
 
     }
