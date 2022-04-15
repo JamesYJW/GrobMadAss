@@ -39,12 +39,17 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         buttonMakePayment.setOnClickListener {
+
             val bIntent = Intent(this, PaymentSummaryActivity::class.java)
             bIntent.putExtra("receiveObj",passObj) //pass obj
             startActivity(bIntent)
             //Toast.makeText(this, passObj, Toast.LENGTH_SHORT).show()
         }
+
     }
+
+
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
