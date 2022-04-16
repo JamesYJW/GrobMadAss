@@ -1,4 +1,4 @@
-package com.example.grobmadass.data
+package com.example.grobmadass.dataModels
 
 data class PrivateCarData(
     var privateCarId: String = "",

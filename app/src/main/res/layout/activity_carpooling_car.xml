@@ -22,14 +22,14 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-126dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCarpooling_CCA"
-        android:layout_width="360dp"
-        android:layout_height="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCarpoolingCal_CCA"
-        tools:listitem="@layout/carpoolingcarpage_view" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCarpooling_CCA"
+                android:layout_width="360dp"
+                android:layout_height="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCarpoolingCal_CCA"
+                tools:listitem="@layout/carpoolingcarpage_view" />
 
             <TextView
                 android:id="@+id/tvCarpoolingCal_CCA"
@@ -48,107 +48,107 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="331dp"
-        android:layout_height="177dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA"
-        app:layout_constraintVertical_bias="0.068" />
+                android:id="@+id/mapView"
+                android:layout_width="331dp"
+                android:layout_height="177dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA"
+                app:layout_constraintVertical_bias="0.068" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="212dp"
-        android:text="Total Time:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="212dp"
+                android:text="Total Time:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Total Passengers in this Order:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView1"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Total Passengers in this Order:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView1"
+                app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Total Price:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Total Price:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
-        android:layout_marginEnd="4dp"
-        android:text="Total Distance:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tvTotalDistance_CCA"
-        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="212dp"
+                android:layout_marginEnd="4dp"
+                android:text="Total Distance:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvTotalDistance_CCA"
+                app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
 
-    <TextView
-        android:id="@+id/tvTotalTime_CCA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="212dp"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView1"
-        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
+            <TextView
+                android:id="@+id/tvTotalTime_CCA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="212dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/textView1"
+                app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
 
-    <TextView
-        android:id="@+id/tvTotalDistance_CCA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
+            <TextView
+                android:id="@+id/tvTotalDistance_CCA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="212dp"
+                android:layout_marginEnd="16dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_CCA" />
 
-    <TextView
-        android:id="@+id/tvTotalPax_CCA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance_CCA"
-        app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance_CCA" />
+            <TextView
+                android:id="@+id/tvTotalPax_CCA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance_CCA"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance_CCA" />
 
-    <TextView
-        android:id="@+id/tvTotalPrice_CCA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvTotalPax_CCA"
-        app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_CCA" />
+            <TextView
+                android:id="@+id/tvTotalPrice_CCA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvTotalPax_CCA"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_CCA" />
 
             <Button
                 android:id="@+id/btnAccept_CCA"
