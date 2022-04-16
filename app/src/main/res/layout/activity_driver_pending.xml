@@ -6,59 +6,161 @@
     android:layout_height="match_parent"
     tools:context=".DriverPendingActivity">
 
-    <Button
-        android:id="@+id/btnView_DPA"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="View"
-        app:layout_constraintEnd_toEndOf="@+id/btnStart_DPA"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btnStart_DPA"
-        app:layout_constraintTop_toBottomOf="@+id/btnStart_DPA" />
-
-    <Button
-        android:id="@+id/btnMarkAsDone_DPA"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Mark As Done"
-        app:layout_constraintEnd_toEndOf="@+id/btnView_DPA"
-        app:layout_constraintStart_toStartOf="@+id/btnView_DPA"
-        app:layout_constraintTop_toBottomOf="@+id/btnView_DPA" />
-
     <TextView
-        android:id="@+id/tvName_DPA"
+        android:id="@+id/tvTotalPax_DPA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="TextView"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnCall_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/btnCall_DPA" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Total of Passengers:"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvDestinationLoc_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/tvDestinationLoc_DPA" />
+
+    <TextView
+        android:id="@+id/tvTotalPrice_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTotalPax_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_DPA" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Total Price:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Destination Location"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvWaitLoc_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/tvWaitLoc_DPA" />
+
+    <TextView
+        android:id="@+id/tvDestinationLoc_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Waiting Location"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ivUserProfile_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/ivUserProfile_DPA" />
+
+    <TextView
+        android:id="@+id/tvWaitLoc_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <ImageView
+        android:id="@+id/ivUserProfile_DPA"
+        android:layout_width="82dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="52dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvCustName_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintStart_toEndOf="@+id/ivUserProfile_DPA"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCustPhoneNum_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/ivUserProfile_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/tvCustName_DPA" />
+
+    <Button
+        android:id="@+id/btnMarkAsDone_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Mark As Done"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel_DPA"
+        app:layout_constraintStart_toEndOf="@+id/btnStart_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnStart_DPA"
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
         android:text="start"
-        app:layout_constraintEnd_toEndOf="@+id/tvName_DPA"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="@+id/tvName_DPA"
-        app:layout_constraintTop_toBottomOf="@+id/tvName_DPA" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnCancel_DPA"
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
         android:text="Cancel"
-        app:layout_constraintEnd_toEndOf="@+id/btnMarkAsDone_DPA"
-        app:layout_constraintStart_toStartOf="@+id/btnMarkAsDone_DPA"
-        app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone_DPA" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btnCall_DPA"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="32dp"
+        android:text="call"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

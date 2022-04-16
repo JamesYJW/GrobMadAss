@@ -19,15 +19,16 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-126dp">
+
             <TextView
                 android:id="@+id/tvWaitLoc_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView17"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
             <Button
                 android:id="@+id/btnCall_PCA"
                 android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
                 android:layout_marginTop="68dp"
                 android:layout_marginEnd="44dp"
                 android:text="call"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
@@ -56,30 +58,30 @@
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28"
                 tools:ignore="SpeakableTextPresentCheck" />
+
             <TextView
                 android:id="@+id/tvDestinationLoc_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView20"
                 app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
             <TextView
                 android:id="@+id/tvCustPhoneNum_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/imageView12"
+                app:layout_constraintStart_toEndOf="@+id/ivUserProfile_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustName_PCA" />
+
             <TextView
                 android:id="@+id/tvTotalDistance_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="264dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalPax_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_PCA" />
@@ -91,6 +93,17 @@
                 android:text="Accept"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalPrice_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice_PCA" />
+
+            <ImageView
+                android:id="@+id/ivUserProfile_PCA"
+                android:layout_width="82dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="52dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
@@ -100,8 +113,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+                app:layout_constraintStart_toStartOf="@+id/ivUserProfile_PCA"
+                app:layout_constraintTop_toBottomOf="@+id/ivUserProfile_PCA" />
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="wrap_content"
@@ -136,49 +149,40 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/tvDestinationLoc_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvDestinationLoc_PCA" />
+
             <TextView
                 android:id="@+id/tvTotalPax_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="186dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/btnCall_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/btnCall_PCA" />
+
             <TextView
                 android:id="@+id/tvCustName_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="68dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/imageView12"
+                app:layout_constraintStart_toEndOf="@+id/ivUserProfile_PCA"
                 app:layout_constraintTop_toTopOf="parent" />
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="82dp"
-                android:layout_height="75dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="52dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+
             <TextView
                 android:id="@+id/tvTotalTime_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="264dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/textView32"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
             <TextView
                 android:id="@+id/tvTotalPrice_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance_PCA" />
