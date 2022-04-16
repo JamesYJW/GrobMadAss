@@ -134,7 +134,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView_pricing_time" />
 
     <TextView
-        android:id="@+id/RM"
+        android:id="@+id/rmm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -150,9 +150,9 @@
         android:layout_height="wrap_content"
         android:text="12.00"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/RM"
-        app:layout_constraintStart_toEndOf="@+id/RM"
-        app:layout_constraintTop_toTopOf="@+id/RM" />
+        app:layout_constraintBottom_toBottomOf="@+id/rmm"
+        app:layout_constraintStart_toEndOf="@+id/rmm"
+        app:layout_constraintTop_toTopOf="@+id/rmm" />
 
     <TextView
         android:id="@+id/baseFare"

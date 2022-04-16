@@ -1,9 +1,7 @@
 package com.example.grobmadass
 
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,77 +9,72 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.grobmadass.databinding.ActivityGoogleMapBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import android.location.Address
 import android.location.Geocoder
-import android.os.Build
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.maps.model.Marker
-import android.location.Location
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
+import android.content.Context
 import android.os.AsyncTask
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.location.LocationListener
-import com.google.android.gms.location.LocationRequest
 import java.io.IOException
 
 import android.graphics.Color
+import android.icu.text.DecimalFormat
+import android.os.Build
+import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
+import androidx.annotation.RequiresApi
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.libraries.places.api.Places
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
-/*
-class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{*/
-class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
+import org.slf4j.Marker
+
+class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
+
     private var mMap: GoogleMap? = null
-    private lateinit var mLastLocation: Location
-    private var mCurrLocationMarker: Marker? = null
-    private var mGoogleApiClient: GoogleApiClient? = null
-    private lateinit var mLocationRequest: LocationRequest
+    //private lateinit var mLastLocation: Location
+    //private var mCurrLocationMarker: Marker? = null
+    //private var mGoogleApiClient: GoogleApiClient? = null
+    //private lateinit var mLocationRequest: LocationRequest
 
 
-    private var originLatitude: Double = 3.2167087
-    private var originLongitude: Double = 101.72497
-    private var destinationLatitude: Double = 3.2167087
-    private var destinationLongitude: Double = 101.72497
-    /*
+    //default at pv15
+    private var originLatitude: Double = 3.2023
+    private var originLongitude: Double = 101.7166
+    private var destinationLatitude: Double = 3.2023
+    private var destinationLongitude: Double = 101.7166
 
-    private lateinit var m1Map: GoogleMap
-    private lateinit var binding: ActivityGoogleMapBinding
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-*/
+    private var markerDest: Marker? = null
 
+
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_map)
-/*
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        binding = ActivityGoogleMapBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val btnSearchLocation = findViewById<Button>(R.id.btnSearchLocation)
+        val locationSearch = findViewById<EditText>(R.id.etLocation)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        val rlCarPax = findViewById<RelativeLayout>(R.id.rlCarPax)
+        val btn4paxCar = findViewById<Button>(R.id.btn4paxCar)
+        val btn6paxCar = findViewById<Button>(R.id.btn6paxCar)
 
- */
+        val tvDistCost = findViewById<TextView>(R.id.tvDistCost)
+        val btnCancelBooking = findViewById<Button>(R.id.btnCancelBooking)
+        val btnBookCar = findViewById<Button>(R.id.btnBookCar)
+
+        var paxCarNo:Int = 0
+        var location: String? = null
+
+        //open search location page
+        btnSearchLocation.visibility = View.VISIBLE
+        locationSearch.visibility = View.VISIBLE
 
         // Fetching API_KEY which we wrapped
+        /*
         val ai: ApplicationInfo = applicationContext.packageManager
             .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
         val value = ai.metaData["com.google.android.geo.API_KEY"]
@@ -91,24 +84,23 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, apiKey)
         }
+        */
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         // Map Fragment
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val gd = findViewById<Button>(R.id.directions)
-        gd.setOnClickListener{
-
+        btnSearchLocation.setOnClickListener{
+            closeKeyBoard()
 
             mapFragment.getMapAsync {
                 mMap = it
                 val originLocation = LatLng(originLatitude, originLongitude)
-                mMap!!.addMarker(MarkerOptions().position(originLocation))
+                mMap!!.addMarker(MarkerOptions().position(originLocation)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
 
                 //search
-                val locationSearch:EditText = findViewById<EditText>(R.id.s_location)
-                var location: String? = null
                 location = locationSearch.text.toString()
                 var addressList: List<Address>? = null
 
@@ -127,17 +119,108 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     destinationLatitude = address.latitude.toDouble()
                     destinationLongitude = address.longitude.toDouble()
 
-                    //point destination
+                    //destination
                     val destinationLocation = LatLng(destinationLatitude, destinationLongitude)
                     mMap!!.addMarker(MarkerOptions().position(destinationLocation))
-                    val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
+
 
                     //get direction
+                    //val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
+                    val urll = getDirectionURL(originLocation, destinationLocation)
                     GetDirection(urll).execute()
                     mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLocation, 14F))
+
+                    //open select car pax page
+                    rlCarPax.visibility = View.VISIBLE
+                    btn4paxCar.visibility = View.VISIBLE
+                    btn6paxCar.visibility = View.VISIBLE
+
+                    //close search location page
+                    btnSearchLocation.visibility = View.INVISIBLE
+                    locationSearch.visibility = View.INVISIBLE
+
                 }
             }
         }
+
+        btn4paxCar.setOnClickListener{
+            paxCarNo = 4
+
+            var distance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
+            val formatKm = DecimalFormat("#0.0000")
+            var strDis = "" + formatKm.format(distance) + "km"
+
+            var cost = calcCost(distance, paxCarNo)
+            val formatRm = DecimalFormat("##0.00")
+            var strCost = "RM " + formatRm.format(cost)
+
+            //open confirm book page
+            tvDistCost.text = location + "\n" + strDis + "\n" + strCost
+            tvDistCost.visibility = View.VISIBLE
+            btnCancelBooking.visibility = View.VISIBLE
+            btnBookCar.visibility = View.VISIBLE
+
+            //close select car pax page
+            rlCarPax.visibility = View.INVISIBLE
+            btn4paxCar.visibility = View.INVISIBLE
+            btn6paxCar.visibility = View.INVISIBLE
+
+        }
+
+        btn6paxCar.setOnClickListener{
+            paxCarNo = 6
+
+            var distance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
+            val formatKm = DecimalFormat("#0.0000")
+            var strDis = "" + formatKm.format(distance) + "km"
+
+            var cost = calcCost(distance, paxCarNo)
+            val formatRm = DecimalFormat("##0.00")
+            var strCost = "RM " + formatRm.format(cost)
+
+            //open confirm book page
+            tvDistCost.text = location + "\n" + strDis + "\n" + strCost
+            tvDistCost.visibility = View.VISIBLE
+            btnCancelBooking.visibility = View.VISIBLE
+            btnBookCar.visibility = View.VISIBLE
+
+            //close select car pax page
+            rlCarPax.visibility = View.INVISIBLE
+            btn4paxCar.visibility = View.INVISIBLE
+            btn6paxCar.visibility = View.INVISIBLE
+        }
+
+        val btnCnlBook = findViewById<Button>(R.id.btnCancelBooking)
+        btnCnlBook.setOnClickListener{
+
+            val locationSearch = findViewById<EditText>(R.id.etLocation)
+            val tvDNC = findViewById<TextView>(R.id.tvDistCost)
+            val btnBkCar = findViewById<Button>(R.id.btnBookCar)
+
+            mapFragment.getMapAsync {
+                mMap = it
+
+                mMap!!.clear()
+                tvDNC.visibility = View.INVISIBLE
+                btnCnlBook.visibility = View.INVISIBLE
+                btnBkCar.visibility = View.INVISIBLE
+
+                //open search location page
+                btnSearchLocation.visibility = View.VISIBLE
+                locationSearch.visibility = View.VISIBLE
+
+                val originLocation = LatLng(originLatitude, originLongitude)
+                mMap!!.addMarker(MarkerOptions().position(originLocation)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+                mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15F))
+            }
+        }
+        val btnBkCar = findViewById<Button>(R.id.btnBookCar)
+        btnBkCar.setOnClickListener{
+
+
+        }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -146,17 +229,16 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val originLocation = LatLng(originLatitude, originLongitude)
         mMap!!.clear()
         mMap!!.addMarker(MarkerOptions().position(originLocation))
-        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 18F))
+        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15F))
 
     }
 
-
-    private fun getDirectionURL(origin:LatLng, dest:LatLng, secret: String) : String{
+    //private fun getDirectionURL(origin:LatLng, dest:LatLng, secret: String) : String{
+    private fun getDirectionURL(origin:LatLng, dest:LatLng) : String{
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}" +
-                "&destination=${dest.latitude},${dest.longitude}" +
-                "&sensor=false" +
-                "&mode=driving" +
-                "&key=$secret"
+            "&destination=${dest.latitude},${dest.longitude}" +
+            "&sensor=false" +
+            "&mode=driving"
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -186,7 +268,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             for (i in result.indices) {
                 lineoption.addAll(result[i])
                 lineoption.width(10f)
-                lineoption.color(Color.BLUE)
+                lineoption.color(Color.GREEN)
                 lineoption.geodesic(true)
             }
             mMap!!.addPolyline(lineoption)
@@ -225,4 +307,37 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         return poly
     }
 
+    private fun calcDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val theta = lon1 - lon2
+        var dist = (Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + (Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta))))
+        dist = Math.acos(dist)
+        dist = rad2deg(dist)
+        dist = dist * 60 * 1.1515
+        return dist
+    }
+
+    private fun deg2rad(deg: Double): Double {
+        return deg * Math.PI / 180.0
+    }
+
+    private fun rad2deg(rad: Double): Double {
+        return rad * 180.0 / Math.PI
+    }
+
+    private fun calcCost(distance: Double, pax: Int): Double{
+        val cost = distance * 1.2 * pax
+        return cost
+    }
+
+    private fun closeKeyBoard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
 }

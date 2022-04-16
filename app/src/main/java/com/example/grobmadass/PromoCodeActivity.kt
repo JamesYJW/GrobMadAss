@@ -1,5 +1,6 @@
 package com.example.grobmadass
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 class PromoCodeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPromoCodeBinding
         private lateinit var database: DatabaseReference
+        private lateinit var receiveObj:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPromoCodeBinding.inflate(layoutInflater)
@@ -25,7 +27,9 @@ class PromoCodeActivity : AppCompatActivity() {
         val promoCodeFirebase : ArrayList<String>
         val discountFirebase : ArrayList<String>
         // Received obj
-        val receiveObj = intent.getStringExtra("receiveObj").toString()
+        receiveObj = intent.getStringExtra("receiveObj").toString()
+
+
         val btnApply : Button = binding.btnApply
 
             btnApply.setOnClickListener {
@@ -45,11 +49,14 @@ class PromoCodeActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().getReference("PromoCode")
         database.child(inputPromoCode).get().addOnSuccessListener {
             if(it.exists()){
-                val code = it.child("Code").value
-                val disc = it.child("discount").value
+                val disc = it.value.toString()
                 Toast.makeText(this,"Promo code read!", Toast.LENGTH_SHORT).show()
                 binding.inputPromoCode.text.clear()
+                receiveObj += "_"+disc
 
+                val bIntent = Intent(this, PaymentSummaryActivity::class.java)
+                bIntent.putExtra("receiveObj",receiveObj) //pass obj
+                startActivity(bIntent)
 
 
             }else{
