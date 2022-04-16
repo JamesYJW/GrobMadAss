@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this@MainActivity, FindcustomerActivity::class.java)
+        val intent = Intent(this@MainActivity, GoogleMapActivity::class.java)
         intent.putExtra("Username","John Doe")
         startActivity(intent)
 
