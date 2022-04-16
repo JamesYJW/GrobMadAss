@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:alwaysDrawnWithCache="false"
+    android:background="#69FFB6C1">
 
     <ImageView
         android:id="@+id/picCust_PCCV"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="65dp"
+        android:layout_height="62dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -21,10 +25,13 @@
         android:id="@+id/tvTotalPax_PCCV"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="27dp"
         android:text="Pax"
-        app:layout_constraintStart_toEndOf="@+id/tvCustName_PCCV"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvDestination_PCCV"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -33,6 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Destination"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvCustName_PCCV" />
 
@@ -43,6 +53,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:text="CustomerName"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/picCust_PCCV"
         app:layout_constraintTop_toTopOf="parent" />
 

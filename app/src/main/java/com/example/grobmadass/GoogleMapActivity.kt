@@ -13,6 +13,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import java.io.IOException
 
@@ -217,8 +218,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         }
         val btnBkCar = findViewById<Button>(R.id.btnBookCar)
         btnBkCar.setOnClickListener{
-
-
+            val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -228,7 +229,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         mMap = googleMap!!
         val originLocation = LatLng(originLatitude, originLongitude)
         mMap!!.clear()
-        mMap!!.addMarker(MarkerOptions().position(originLocation))
+        mMap!!.addMarker(MarkerOptions().position(originLocation)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
         mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15F))
 
     }

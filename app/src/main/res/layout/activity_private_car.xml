@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PrivateCarActivity">
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -14,7 +13,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -27,7 +25,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView17"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -39,9 +36,9 @@
                 android:layout_marginTop="68dp"
                 android:layout_marginEnd="44dp"
                 android:text="call"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/textView38"
                 android:layout_width="wrap_content"
@@ -53,7 +50,6 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView32"
                 app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView2"
                 android:layout_width="323dp"
@@ -68,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView20"
                 app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -79,8 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/imageView12"
+                app:layout_constraintStart_toEndOf="@+id/ivUserProfile_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustName_PCA" />
 
             <TextView
@@ -88,11 +82,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="264dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalPax_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_PCA" />
-
             <Button
                 android:id="@+id/btnAccept_PCA"
                 android:layout_width="wrap_content"
@@ -101,6 +93,16 @@
                 android:text="Accept"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalPrice_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice_PCA" />
+
+            <ImageView
+                android:id="@+id/ivUserProfile_PCA"
+                android:layout_width="82dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="52dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -111,9 +113,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
-
+                app:layout_constraintStart_toStartOf="@+id/ivUserProfile_PCA"
+                app:layout_constraintTop_toBottomOf="@+id/ivUserProfile_PCA" />
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="wrap_content"
@@ -126,7 +127,6 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvTotalDistance_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_PCA" />
-
             <TextView
                 android:id="@+id/textView32"
                 android:layout_width="wrap_content"
@@ -138,7 +138,6 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
-
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="wrap_content"
@@ -156,7 +155,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="186dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/btnCall_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/btnCall_PCA" />
@@ -167,19 +165,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="68dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/imageView12"
+                app:layout_constraintStart_toEndOf="@+id/ivUserProfile_PCA"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="82dp"
-                android:layout_height="75dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="52dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tvTotalTime_PCA"
@@ -187,7 +174,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="264dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/textView32"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -197,11 +183,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance_PCA" />
-
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
