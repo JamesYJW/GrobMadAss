@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"><![CDATA[
+    tools:context=".GoogleMapActivity" />
+
+    ]]>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <EditText
+        android:id="@+id/s_location"
+        android:layout_width="308dp"
+        android:layout_height="40dp"
+        android:layout_weight="0.5"
+        android:hint="Search..."
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/directions"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_toEndOf="@+id/s_location"
+        android:layout_weight="0.5"
+        android:onClick="searchLocation"
+        android:text="search" />
+
+</RelativeLayout>
+
