@@ -9,21 +9,34 @@ import com.google.firebase.database.*
 class PrivateCarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrivateCarBinding
     private lateinit var database: DatabaseReference
-    private lateinit var privateCarList: ArrayList<PrivateCarData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivateCarBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val customerId = "CTID00001"
-        val privateCarStatus = 1
+        val privateCarId = "PCID00001"
+        val privateCarStatus = false
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
 
-        readPrivateCarData(customerId,privateCarStatus)
+        readPrivateCarData(privateCarId)
 
     }
 
-    private fun readPrivateCarData(customerId: String, privateCarStatus: Int) {
-
+    private fun readPrivateCarData(privateCarId: String) {
+        database.child(privateCarId).get().addOnSuccessListener { rec->
+                if(rec != null){
+                    binding.tvCustNamePCA.text = rec.child("customerId").value.toString()
+                    binding.tvCustPhoneNumPCA.text= rec.child("privateCarTotalPrice").value.toString() //<-- getDataFromCustomerList
+                    binding.tvWaitLocPCA.text= rec.child("privateCarWaitGeoN").value.toString()+", "+rec.child("privateCarWaitGeoE").value.toString()
+                    binding.tvDestinationLocPCA.text= rec.child("privateCarDesGeoN").value.toString()+", "+rec.child("privateCarDesGeoE").value.toString()
+                    binding.tvTotalPaxPCA.text= rec.child("privateCarTotalPax").value.toString()
+                    binding.tvTotalTimePCA.text= rec.child("privateCarTotalTime").value.toString()
+                    binding.tvTotalDistancePCA.text= rec.child("privateCarTotalDistance").value.toString()
+                    binding.tvTotalPricePCA.text= rec.child("privateCarTotalPrice").value.toString()
+                }
+                else{
+                    binding.tvCustNamePCA.text = "Fail"
+                }
+            }
     }
 }

@@ -119,6 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="264dp"
+                android:layout_marginEnd="4dp"
                 android:text="Total Distance:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -213,22 +214,6 @@
                 app:layout_constraintStart_toStartOf="@+id/tvWaitLoc_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvWaitLoc_PCA" />
 
-            <Button
-                android:id="@+id/btnInsert_PCA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="@+id/textView38"
-                app:layout_constraintTop_toBottomOf="@+id/textView38" />
-
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="@+id/textView38"
-                app:layout_constraintTop_toBottomOf="@+id/textView38" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

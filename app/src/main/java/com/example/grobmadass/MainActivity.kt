@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this@MainActivity, PrivateCarActivity::class.java)
+        val intent = Intent(this@MainActivity, CarpoolingCarActivity::class.java)
         intent.putExtra("Username","John Doe")
         startActivity(intent)
     }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriverPendingActivity">
+
+    <Button
+        android:id="@+id/btnView_DPA"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="View"
+        app:layout_constraintEnd_toEndOf="@+id/btnStart_DPA"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btnStart_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/btnStart_DPA" />
+
+    <Button
+        android:id="@+id/btnMarkAsDone_DPA"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Mark As Done"
+        app:layout_constraintEnd_toEndOf="@+id/btnView_DPA"
+        app:layout_constraintStart_toStartOf="@+id/btnView_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/btnView_DPA" />
+
+    <TextView
+        android:id="@+id/tvName_DPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnStart_DPA"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="start"
+        app:layout_constraintEnd_toEndOf="@+id/tvName_DPA"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/tvName_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/tvName_DPA" />
+
+    <Button
+        android:id="@+id/btnCancel_DPA"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Cancel"
+        app:layout_constraintEnd_toEndOf="@+id/btnMarkAsDone_DPA"
+        app:layout_constraintStart_toStartOf="@+id/btnMarkAsDone_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/btnMarkAsDone_DPA" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
