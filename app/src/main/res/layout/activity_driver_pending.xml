@@ -121,36 +121,45 @@
 
     <Button
         android:id="@+id/btnMarkAsDone_DPA"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16dp"
         android:text="Mark As Done"
         android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/btnCancel_DPA"
-        app:layout_constraintStart_toEndOf="@+id/btnStart_DPA"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/btnDriveToWait_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/btnDriveToWait_DPA" />
 
     <Button
-        android:id="@+id/btnStart_DPA"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnDriveToWait_DPA"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
-        android:text="start"
+        android:layout_marginTop="34dp"
+        android:text="to Waiting Point"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/btnCancel_DPA"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnStartDriveToDec_DPA"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="16dp"
-        android:text="Cancel"
+        android:text="to Destination"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btnCancel_DPA"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Cancel"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/btnStartDriveToDec_DPA"
+        app:layout_constraintTop_toBottomOf="@+id/btnStartDriveToDec_DPA" />
 
     <Button
         android:id="@+id/btnCall_DPA"

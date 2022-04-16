@@ -12,4 +12,5 @@ data class PrivateCarData(
     var privateCarTotalPrice: Double = 0.0,
     var privateCarStatus: Int = 0,
     var customerId: String = "",
+    var isPay: Boolean = false
 )

@@ -30,22 +30,67 @@ class DriverPendingActivity : AppCompatActivity() {
 
         readPrivateCarData(privateCarId)
 
-        binding.btnStartDPA.setOnClickListener(){
-            val geoCurret = Uri.parse("http://maps.google.com/maps?saddr=${custWaitGeo}&daddr=${custDesGeo}")
-            val intentMap: Intent = Intent(Intent.ACTION_VIEW, geoCurret )
+        binding.btnDriveToWaitDPA.setOnClickListener(){
+            val toWaitingPointURL = Uri.parse("http://maps.google.com/maps?saddr=3.202713,101.716791&daddr=${custWaitGeo}")
+            val intentMap: Intent = Intent(Intent.ACTION_VIEW, toWaitingPointURL )
+            startActivity(intentMap)
+            changePrivateCarStatusToStart(privateCarId)
+        }
+
+        binding.btnStartDriveToDecDPA.setOnClickListener(){
+            val toDesPointURL = Uri.parse("http://maps.google.com/maps?saddr=3.202713,101.716791&daddr=${custDesGeo}")
+            val intentMap: Intent = Intent(Intent.ACTION_VIEW, toDesPointURL )
             startActivity(intentMap)
         }
+
         binding.btnMarkAsDoneDPA.setOnClickListener(){
-
+            changePrivateCarStatusToDone(privateCarId)
+            val intent = Intent(this, FindcustomerActivity::class.java)
+            startActivity(intent)
         }
+
         binding.btnCancelDPA.setOnClickListener(){
-
+            changePrivateCarStatusToCancel(privateCarId)
         }
+
         binding.btnCallDPA.setOnClickListener(){
             val telNo = Uri.parse("tel: $custPhoneNum")
             val intentCall: Intent = Intent(Intent.ACTION_DIAL, telNo)
             startActivity(intentCall)
         }
+    }
+
+    private fun changePrivateCarStatusToStart(privateCarId: String) {
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+        database.child(privateCarId).child("privateCarStatus")
+            .setValue(3).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Accepted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun changePrivateCarStatusToDone(privateCarId: String) {
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+        database.child(privateCarId).child("privateCarStatus")
+            .setValue(4).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Well Done!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun changePrivateCarStatusToCancel(privateCarId: String) {
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+        database.child(privateCarId).child("privateCarStatus")
+            .setValue(1).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Accepted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun readPrivateCarData(privateCarId: String) {
@@ -54,10 +99,12 @@ class DriverPendingActivity : AppCompatActivity() {
         database.child(privateCarId).get().addOnSuccessListener { rec->
             if(rec != null){
                 val customerId = rec.child("customerId").value.toString()
-                binding.tvWaitLocDPA.text= rec.child("privateCarWaitGeoN").value.toString()+" "+rec.child("privateCarWaitGeoE").value.toString()
-                binding.tvDestinationLocDPA.text= rec.child("privateCarDesGeoN").value.toString()+", "+rec.child("privateCarDesGeoE").value.toString()
-                binding.tvTotalPaxDPA.text= rec.child("privateCarTotalPax").value.toString()
-                binding.tvTotalPriceDPA.text= rec.child("privateCarTotalPrice").value.toString()
+                custWaitGeo = rec.child("privateCarWaitGeoN").value.toString()+","+rec.child("privateCarWaitGeoE").value.toString()
+                binding.tvWaitLocDPA.text = custWaitGeo
+                custDesGeo = rec.child("privateCarDesGeoN").value.toString()+","+rec.child("privateCarDesGeoE").value.toString()
+                binding.tvDestinationLocDPA.text = custDesGeo
+                binding.tvTotalPaxDPA.text = rec.child("privateCarTotalPax").value.toString()
+                binding.tvTotalPriceDPA.text = rec.child("privateCarTotalPrice").value.toString()
 
                 database = FirebaseDatabase.getInstance().getReference("userProfile")
                 readUserProfileData(customerId)
@@ -80,7 +127,9 @@ class DriverPendingActivity : AppCompatActivity() {
                 binding.btnCallDPA.visibility = View.VISIBLE
                 binding.btnCancelDPA.visibility = View.VISIBLE
                 binding.btnMarkAsDoneDPA.visibility = View.VISIBLE
-                binding.btnStartDPA.visibility = View.VISIBLE
+                binding.btnDriveToWaitDPA.visibility = View.VISIBLE
+                binding.btnStartDriveToDecDPA.visibility = View.VISIBLE
+
             }
             else{
                 Toast.makeText(applicationContext, "Fail to get data!", Toast.LENGTH_SHORT).show()
