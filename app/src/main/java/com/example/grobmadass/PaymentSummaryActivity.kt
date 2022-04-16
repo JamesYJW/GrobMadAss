@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import com.example.grobmadass.databinding.ActivityPaymentSummaryBinding
 import com.example.grobmadass.databinding.ActivityPromoCodeBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.paypal.checkout.PayPalCheckout
 import com.paypal.checkout.approve.OnApprove
 import com.paypal.checkout.config.CheckoutConfig
@@ -26,12 +29,12 @@ class PaymentSummaryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentSummaryBinding
     private lateinit var config: CheckoutConfig
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentSummaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val receiveObj = intent.getStringExtra("receiveObj").toString()
         val paymentInfoArray: List<String> = receiveObj.split("_")
         binding.textViewPsumCar.text = paymentInfoArray[1]
@@ -88,12 +91,35 @@ class PaymentSummaryActivity : AppCompatActivity() {
                 approval.orderActions.capture { captureOrderResult ->
                     //After Success Payment will run here
                     Log.i("CaptureOrder", "CaptureOrderResult: $captureOrderResult")
+                    changePrivateCarPay(paymentInfoArray[0]);
+
+
                 }
             }
         )
+//todo update payment
+
 
     }
+    private fun changePrivateCarPay(privateCarId: String) {
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+      val test = database.child("$privateCarId/privateCarStatus").get().addOnSuccessListener {
+          if(it.value.toString() == "4"){
 
+              database.child(privateCarId).child("isPay")
+                  .setValue(true).addOnSuccessListener {
+                      Toast.makeText(applicationContext, "Payment Accepted", Toast.LENGTH_SHORT).show()
+                  }
+                  .addOnFailureListener { e ->
+                      Toast.makeText(applicationContext, "Payment Reject!", Toast.LENGTH_SHORT).show()
+                  }
+          }
+          else{
+              Toast.makeText(applicationContext, "Fail because privateCarStatus != 4", Toast.LENGTH_SHORT).show()
+          }
+      }
+
+    }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
