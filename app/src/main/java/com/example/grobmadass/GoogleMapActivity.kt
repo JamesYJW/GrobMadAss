@@ -43,10 +43,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
-
+/*
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
-
+    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{*/
+class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mMap: GoogleMap? = null
     private lateinit var mLastLocation: Location
     private var mCurrLocationMarker: Marker? = null
@@ -56,8 +56,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
 
     private var originLatitude: Double = 3.2167087
     private var originLongitude: Double = 101.72497
-    private var destinationLatitude: Double = 3.2057
-    private var destinationLongitude: Double = 101.7318
+    private var destinationLatitude: Double = 3.2167087
+    private var destinationLongitude: Double = 101.72497
     /*
 
     private lateinit var m1Map: GoogleMap
@@ -127,10 +127,12 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
                     destinationLatitude = address.latitude.toDouble()
                     destinationLongitude = address.longitude.toDouble()
 
-                    //hardcode
+                    //point destination
                     val destinationLocation = LatLng(destinationLatitude, destinationLongitude)
                     mMap!!.addMarker(MarkerOptions().position(destinationLocation))
                     val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
+
+                    //get direction
                     GetDirection(urll).execute()
                     mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLocation, 14F))
                 }
@@ -144,107 +146,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
         val originLocation = LatLng(originLatitude, originLongitude)
         mMap!!.clear()
         mMap!!.addMarker(MarkerOptions().position(originLocation))
-        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15F))
-
-
-        /*
-        mMap = googleMap
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient()
-                mMap!!.isMyLocationEnabled = true
-            }
-        } else {
-            buildGoogleApiClient()
-            mMap!!.isMyLocationEnabled = true
-        }
-        */
+        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 18F))
 
     }
 
-    private fun buildGoogleApiClient() {
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .addApi(LocationServices.API).build()
-        mGoogleApiClient!!.connect()
-    }
 
-    override fun onConnected(bundle: Bundle?) {
-
-        mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 1000
-        mLocationRequest.fastestInterval = 1000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.getFusedLocationProviderClient(this)
-        }
-    }
-
-    override fun onConnectionSuspended(i: Int) {
-
-    }
-
-    override fun onLocationChanged(location: Location) {
-
-        mLastLocation = location
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker!!.remove()
-        }
-        //Place current location marker
-        val latLng = LatLng(location.latitude, location.longitude)
-        val markerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title("Current Position")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-        mCurrLocationMarker = mMap!!.addMarker(markerOptions)
-
-        //move map camera
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.getFusedLocationProviderClient(this)
-        }
-
-    }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {
-
-    }
-/*
-    fun searchLocation(view: View) {
-        val locationSearch:EditText = findViewById<EditText>(R.id.s_location)
-        var location: String? = null
-        location = locationSearch.text.toString()
-        var addressList: List<Address>? = null
-
-        if (location == null || location == "") {
-            Toast.makeText(applicationContext,"provide location",Toast.LENGTH_SHORT).show()
-        }
-        else{
-            val geoCoder = Geocoder(this)
-            try {
-                addressList = geoCoder.getFromLocationName(location, 1)
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            val address = addressList!![0]
-            //val latLng = LatLng(address.latitude, address.longitude)
-
-            //destinationLatitude = address.latitude
-            //destinationLongitude = address.longitude
-
-            //mMap!!.addMarker(MarkerOptions().position(latLng).title(location))
-            //mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-            //Toast.makeText(applicationContext, address.latitude.toString() + " " + address.longitude, Toast.LENGTH_LONG).show()
-        }
-    }
-*/
     private fun getDirectionURL(origin:LatLng, dest:LatLng, secret: String) : String{
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}" +
                 "&destination=${dest.latitude},${dest.longitude}" +
@@ -280,7 +186,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListe
             for (i in result.indices) {
                 lineoption.addAll(result[i])
                 lineoption.width(10f)
-                lineoption.color(Color.GREEN)
+                lineoption.color(Color.BLUE)
                 lineoption.geodesic(true)
             }
             mMap!!.addPolyline(lineoption)
