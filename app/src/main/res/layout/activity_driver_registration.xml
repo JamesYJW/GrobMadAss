@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriverRegistrationActivity">
+
+    <TextView android:id="@+id/titleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Be a Grob Driver"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#000000"
+        android:layout_margin="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/grobCarIcon"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv"
+        app:srcCompat="@drawable/grobcar" />
+
+    <EditText
+        android:id="@+id/carlicenseNumberInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="Driving License Number"
+        android:inputType="number"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grobCarIcon" />
+
+    <EditText android:id="@+id/carplateNumberInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carlicenseNumberInput"
+        android:hint="Car Plate Number"
+        android:textColor="#000000"
+        android:layout_margin="10dp"
+        />
+
+    <EditText android:id="@+id/carModelInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carplateNumberInput"
+        android:hint="Car Model"
+        android:textColor="#000000"
+        android:layout_margin="10dp"
+        />
+
+    <EditText android:id="@+id/carColourInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carModelInput"
+        android:hint="Car Colour"
+        android:textColor="#000000"
+        android:layout_margin="10dp"
+        />
+
+    <Button android:id="@+id/btnRegisterDriver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false"
+        android:text="Sign Up Now"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/carColourInput"/>
+
+    <Button android:id="@+id/btnCancelRegisterDriver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false"
+        android:text="Cancel"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegisterDriver"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
