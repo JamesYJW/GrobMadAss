@@ -13,4 +13,6 @@ data class PrivateCarData(
     var privateCarStatus: Int = 0,
     var customerId: String = "",
     var paid: Boolean = false,
+    var findCancel: Boolean = false,
+    var driverId: String = "",
 )

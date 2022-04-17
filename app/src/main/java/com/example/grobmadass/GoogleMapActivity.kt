@@ -43,6 +43,7 @@ import okhttp3.Request
 import okhttp3.internal.format
 import org.slf4j.Marker
 import android.widget.Button
+import com.google.firebase.auth.FirebaseAuth
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var binding: ActivityPrivateCarBinding
@@ -57,6 +58,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
     private var markerDest: Marker? = null
     private lateinit var database: DatabaseReference
+
+    //get user database
+    private lateinit var auth: FirebaseAuth
+    private var databaseReference : DatabaseReference? =null
+    private var database2 : FirebaseDatabase? =null
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +86,12 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         var totalCost:Double = 0.0
         var totalTime:Int = 0
         var location: String? = null
+
+        //user auth
+        auth = FirebaseAuth.getInstance()
+        database2 = FirebaseDatabase.getInstance()
+        databaseReference = database2?.reference!!.child("userProfile")
+
 
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
 
@@ -127,12 +139,12 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
                         destinationLatitude = address.latitude.toDouble()
                         destinationLongitude = address.longitude.toDouble()
 
-                        //mark orig
+                        //mark origin
                         val originLocation = LatLng(originLatitude, originLongitude)
                         mMap!!.addMarker(MarkerOptions().position(originLocation)
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
 
-                        //mark dest
+                        //mark destination
                         val destinationLocation = LatLng(destinationLatitude, destinationLongitude)
                         mMap!!.addMarker(MarkerOptions().position(destinationLocation))
 
@@ -143,36 +155,36 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
                         //open select car pax page
                         rlCarPax.visibility = View.VISIBLE
-                        btn4paxCar.visibility = View.VISIBLE
-                        btn6paxCar.visibility = View.VISIBLE
+                        //btn4paxCar.visibility = View.VISIBLE
+                        //btn6paxCar.visibility = View.VISIBLE
 
                         //close search location page
                         btnSearchLocation.visibility = View.INVISIBLE
                         locationSearch.visibility = View.INVISIBLE
 
                     } catch (e: IOException) {
-                        Toast.makeText(applicationContext, "Location not found", Toast.LENGTH_SHORT).show()
                         //e.printStackTrace()
+                        Toast.makeText(applicationContext, "Location not found! \n Please Try Again.", Toast.LENGTH_SHORT).show()
                     }
 
                 }
                 //locationSearch.text.clear()
             }
         }
-
-
         btn4paxCar.setOnClickListener{
-            var paxCarNo = 4
+            paxCarNo = 4
 
-            var totalDistance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
+            var dist = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
             var formatKm = DecimalFormat("#0.0000")
-            var strDis = "" + formatKm.format(totalDistance) + "km"
+            totalDistance = formatKm.format(dist).toDouble()
+            var strDis = "" + totalDistance + "km"
 
-            var totalCost = calcCost(totalDistance, paxCarNo)
+            var cost = calcCost(totalDistance, paxCarNo)
             var formatRm = DecimalFormat("##0.00")
-            var strCost = "RM " + formatRm.format(totalCost)
+            totalCost = formatRm.format(cost).toDouble()
+            var strCost = "RM " + totalCost
 
-            var totalTime = calcTime(totalDistance)
+            totalTime = calcTime(totalDistance)
             var strTime = "" +totalTime + " minutes"
 
 
@@ -184,23 +196,25 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
             //close select car pax page
             rlCarPax.visibility = View.INVISIBLE
-            btn4paxCar.visibility = View.INVISIBLE
-            btn6paxCar.visibility = View.INVISIBLE
+            //btn4paxCar.visibility = View.INVISIBLE
+            //btn6paxCar.visibility = View.INVISIBLE
 
         }
 
-        btn6paxCar.setOnClickListener{
-            var paxCarNo = 6
+        btn6paxCar.setOnClickListener {
+            paxCarNo = 6
 
-            var totalDistance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
-            var formatKm = DecimalFormat("#0.000")
-            var strDis = "" + formatKm.format(totalDistance) + "km"
+            var dist = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
+            var formatKm = DecimalFormat("#0.0000")
+            totalDistance = formatKm.format(dist).toDouble()
+            var strDis = "" + totalDistance + "km"
 
-            var totalCost = calcCost(totalDistance, paxCarNo)
+            var cost = calcCost(totalDistance, paxCarNo)
             var formatRm = DecimalFormat("##0.00")
-            var strCost = "RM " + formatRm.format(totalCost)
+            totalCost = formatRm.format(cost).toDouble()
+            var strCost = "RM " + totalCost
 
-            var totalTime = calcTime(totalDistance)
+            totalTime = calcTime(totalDistance)
             var strTime = "" +totalTime + " minutes"
 
 
@@ -212,8 +226,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
             //close select car pax page
             rlCarPax.visibility = View.INVISIBLE
-            btn4paxCar.visibility = View.INVISIBLE
-            btn6paxCar.visibility = View.INVISIBLE
+            //btn4paxCar.visibility = View.INVISIBLE
+            //btn6paxCar.visibility = View.INVISIBLE
         }
 
         val btnCnlBook = findViewById<Button>(R.id.btnCancelBooking)
@@ -244,12 +258,20 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         val btnBkCar = findViewById<Button>(R.id.btnBookCar)
         btnBkCar.setOnClickListener{
 
-            val newPrivateCar = PrivateCarData("",originLatitude
+            //get user id
+            val user = auth.currentUser
+            val userReference = databaseReference?.child(user?.uid!!)
+
+            //success to payment
+            var privateCarId = "PCID00006"
+
+            val newPrivateCar = PrivateCarData(privateCarId,originLatitude
                 ,originLongitude,destinationLatitude,destinationLongitude
-                ,paxCarNo, totalTime, totalDistance,totalCost,1, "123", false)
+                ,paxCarNo, totalTime, totalDistance,totalCost,1, userReference.toString(), false, false)
             addNewPrivateCar(newPrivateCar)
 
             val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)
+            intent.putExtra("privateCarId", privateCarId)
             startActivity(intent)
 
         }
@@ -260,6 +282,35 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
             startActivity(intent)
 
         }
+
+
+        //here
+        tvDistCost.visibility = View.INVISIBLE
+        btnCancelBooking.visibility = View.INVISIBLE
+        btnBookCar.visibility = View.INVISIBLE
+
+        val rlDriverProfile = findViewById<RelativeLayout>(R.id.rlDriverProfile)
+        val tvMsg = findViewById<TextView>(R.id.tvMsg)
+        val ivDriverPic = findViewById<ImageView>(R.id.ivDriverPic)
+        val tvMsg2 = findViewById<TextView>(R.id.tvMsg2)
+        val tvDriverName = findViewById<TextView>(R.id.tvDriverName)
+        val tvCarPlate = findViewById<TextView>(R.id.tvCarPlate)
+        val tvCarModel = findViewById<TextView>(R.id.tvCarModel)
+        val btnCallDriver = findViewById<ImageButton>(R.id.btnCallDriver)
+        val btnGoToPayment = findViewById<Button>(R.id.btnGoToPayment)
+
+        //rlDriverProfile.visibility = View.VISIBLE
+        /*
+        tvMsg.visibility = View.VISIBLE
+        ivDriverPic.visibility = View.VISIBLE
+        tvMsg2.visibility = View.VISIBLE
+        tvDriverName.visibility = View.VISIBLE
+        tvCarPlate.visibility = View.VISIBLE
+        tvCarModel.visibility = View.VISIBLE
+        btnCallDriver.visibility = View.VISIBLE
+        btnGoToPayment.visibility = View.VISIBLE
+        */
+
     }
     private fun addNewPrivateCar(newPrivateCar: PrivateCarData) {
 //        database.child("PrivateCar").child(newPrivateCar.privateCarId)
@@ -407,4 +458,13 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
+    private fun loadUserProfile() {
+
+        val user = auth.currentUser
+        val userReference = databaseReference?.child(user?.uid!!)
+
+
+    }
+
 }
