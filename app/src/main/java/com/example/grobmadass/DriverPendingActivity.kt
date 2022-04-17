@@ -38,15 +38,15 @@ class DriverPendingActivity : AppCompatActivity() {
         }
 
         binding.btnStartDriveToDecDPA.setOnClickListener(){
-            val toDesPointURL = Uri.parse("http://maps.google.com/maps?saddr=3.202713,101.716791&daddr=${custDesGeo}")
+            val toDesPointURL = Uri.parse("http://maps.google.com/maps?saddr=${custWaitGeo}&daddr=${custDesGeo}")
             val intentMap: Intent = Intent(Intent.ACTION_VIEW, toDesPointURL )
             startActivity(intentMap)
+            changePrivateCarStatusToDes(privateCarId)
         }
 
         binding.btnMarkAsDoneDPA.setOnClickListener(){
             changePrivateCarStatusToDone(privateCarId)
-            val intent = Intent(this, FindcustomerActivity::class.java)
-            startActivity(intent)
+
         }
 
         binding.btnCancelDPA.setOnClickListener(){
@@ -58,6 +58,17 @@ class DriverPendingActivity : AppCompatActivity() {
             val intentCall: Intent = Intent(Intent.ACTION_DIAL, telNo)
             startActivity(intentCall)
         }
+    }
+
+    private fun changePrivateCarStatusToDes(privateCarId: String) {
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+        database.child(privateCarId).child("privateCarStatus")
+            .setValue(4).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Well Done!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun changePrivateCarStatusToStart(privateCarId: String) {
@@ -73,13 +84,21 @@ class DriverPendingActivity : AppCompatActivity() {
 
     private fun changePrivateCarStatusToDone(privateCarId: String) {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
-        database.child(privateCarId).child("privateCarStatus")
-            .setValue(4).addOnSuccessListener {
-                Toast.makeText(applicationContext, "Well Done!", Toast.LENGTH_SHORT).show()
+        database.child(privateCarId).child("privateCarStatus").get().addOnSuccessListener { rec->
+            if (rec.value.toString() == "4"){
+                database.child(privateCarId).child("privateCarStatus")
+                    .setValue(5).addOnSuccessListener {
+                    Toast.makeText(applicationContext, "Well Done!", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, FindcustomerActivity::class.java)
+                        startActivity(intent)
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(applicationContext, "Please done your work first!", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
-            }
+        }
     }
 
     private fun changePrivateCarStatusToCancel(privateCarId: String) {

@@ -1,5 +1,6 @@
 package com.example.grobmadass
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -9,11 +10,13 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.grobmadass.adapter.PrivatecarcustomerAdapter
 import com.example.grobmadass.dataModels.PrivateCarData
 import com.example.grobmadass.databinding.ActivityPrivateCarBinding
 import com.google.firebase.database.*
 import java.util.concurrent.Executors
+import java.util.jar.Manifest
 
 class PrivateCarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrivateCarBinding
@@ -120,4 +123,15 @@ class PrivateCarActivity : AppCompatActivity() {
             }
         })
     }
+
+    //check user permission
+    private fun checkPermission():Boolean{
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+    //get user permissiom
+    //private fun
 }

@@ -29,6 +29,16 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
 
         binding.rvPrivateCarFCA.layoutManager = LinearLayoutManager(applicationContext)
         binding.rvPrivateCarFCA.setHasFixedSize(true)
+
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+
+        binding.btnInsertPCA.setOnClickListener() {
+            val newPrivateCar = PrivateCarData("PCID00002",3.203493
+                ,101.713127,3.215976,101.729063
+                ,3, 5, 3.6,12.5,1
+                ,"4pV5OWacrCdKQJx8X66aLak96fB2",false)
+            addNewPrivateCar(newPrivateCar)
+        }
     }
     private fun readData() {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
@@ -64,5 +74,15 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
     }
 
 
+    private fun addNewPrivateCar(newPrivateCar: PrivateCarData) {
+        database.child(newPrivateCar.privateCarId)
+            .setValue(newPrivateCar).addOnSuccessListener {
+                Toast.makeText(applicationContext, "added", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "no", Toast.LENGTH_SHORT).show()
+
+            }
+    }
 
 }
