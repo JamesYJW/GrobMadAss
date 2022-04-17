@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                 if(it.isSuccessful)
                 {
                     Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity,UserProfileActivity::class.java))
+                    startActivity(Intent(this@LoginActivity,GoogleMapActivity::class.java))
                     finish()
                 }
                 else

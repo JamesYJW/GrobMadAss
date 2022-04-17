@@ -38,7 +38,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".GoogleMapActivity"
+            android:name=".LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_google_map" />
         <activity
@@ -72,7 +72,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".GoogleMapActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

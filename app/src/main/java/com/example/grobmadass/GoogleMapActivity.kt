@@ -63,6 +63,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_map)
 
+
         val btnSearchLocation = findViewById<Button>(R.id.btnSearchLocation)
         val locationSearch = findViewById<EditText>(R.id.etLocation)
 
@@ -151,11 +152,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
                     } catch (e: IOException) {
                         Toast.makeText(applicationContext, "Location not found", Toast.LENGTH_SHORT).show()
-                        e.printStackTrace()
+                        //e.printStackTrace()
                     }
 
                 }
-                locationSearch.text.clear()
+                //locationSearch.text.clear()
             }
         }
 
@@ -243,11 +244,9 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         val btnBkCar = findViewById<Button>(R.id.btnBookCar)
         btnBkCar.setOnClickListener{
 
-
-
             val newPrivateCar = PrivateCarData("",originLatitude
                 ,originLongitude,destinationLatitude,destinationLongitude
-                ,paxCarNo, 10, totalDistance,totalCost,1, "123", true)
+                ,paxCarNo, totalTime, totalDistance,totalCost,1, "123", false)
             addNewPrivateCar(newPrivateCar)
 
             val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)
@@ -255,7 +254,12 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
         }
 
+        val btnUserProfile = findViewById<Button>(R.id.btnUserProfile)
+        btnUserProfile.setOnClickListener {
+            val intent = Intent(this@GoogleMapActivity, UserProfileActivity::class.java)
+            startActivity(intent)
 
+        }
     }
     private fun addNewPrivateCar(newPrivateCar: PrivateCarData) {
 //        database.child("PrivateCar").child(newPrivateCar.privateCarId)
@@ -369,7 +373,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
                 * Math.cos(deg2rad(theta))))
         dist = Math.acos(dist)
         dist = rad2deg(dist)
-        dist = dist * 60 * 1.1515
+        dist = dist * 60 * 1.1515 * 2
         return dist
     }
 
@@ -387,10 +391,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     private fun calcTime(distance: Double): Int{
-        val timeH = distance / 50 //50km/h
+        val timeH = distance / 25//25km/h
         val timeM = timeH * 60 //hour to mins
+        val timeT = timeM + 10 //starting point
 
-        val time = timeM.toInt()
+        val time = timeT.toInt()
         return time
     }
 
