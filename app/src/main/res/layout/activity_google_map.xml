@@ -27,8 +27,8 @@
         android:background="@color/white"
         android:hint="Search..."
         android:inputType="textPersonName"
-        android:visibility="invisible"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btnSearchLocation"
@@ -64,7 +64,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:text="Cancel"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btnBookCar"
@@ -75,7 +75,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:text="Book Car"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/rlCarPax"
@@ -111,6 +111,17 @@
             android:visibility="invisible" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnUserProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_margin="5dp"
+        android:text="User profile" />
 
 
 </RelativeLayout>

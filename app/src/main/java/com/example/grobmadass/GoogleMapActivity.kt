@@ -14,11 +14,14 @@ import android.location.Geocoder
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.AsyncTask
 import java.io.IOException
 
 import android.graphics.Color
 import android.icu.text.DecimalFormat
+import android.location.LocationRequest
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -26,8 +29,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.example.grobmadass.dataModels.PrivateCarData
+import com.example.grobmadass.databinding.ActivityPrivateCarBinding
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.libraries.places.api.Places
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -36,15 +42,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.internal.format
 import org.slf4j.Marker
+import android.widget.Button
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
+    private lateinit var binding: ActivityPrivateCarBinding
 
     private var mMap: GoogleMap? = null
-    //private lateinit var mLastLocation: Location
-    //private var mCurrLocationMarker: Marker? = null
-    //private var mGoogleApiClient: GoogleApiClient? = null
-    //private lateinit var mLocationRequest: LocationRequest
-
 
     //default at pv15
     private var originLatitude: Double = 3.2023
@@ -85,7 +88,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         locationSearch.visibility = View.VISIBLE
 
         // Fetching API_KEY which we wrapped
-        /*
         val ai: ApplicationInfo = applicationContext.packageManager
             .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
         val value = ai.metaData["com.google.android.geo.API_KEY"]
@@ -95,7 +97,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, apiKey)
         }
-        */
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         // Map Fragment
@@ -107,9 +108,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
             mapFragment.getMapAsync {
                 mMap = it
-                val originLocation = LatLng(originLatitude, originLongitude)
-                mMap!!.addMarker(MarkerOptions().position(originLocation)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
 
                 //search
                 location = locationSearch.text.toString()
@@ -123,36 +121,44 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
                     try {
                         addressList = geoCoder.getFromLocationName(location, 1)
 
+                        //mark location
+                        val address = addressList!![0]
+                        destinationLatitude = address.latitude.toDouble()
+                        destinationLongitude = address.longitude.toDouble()
+
+                        //mark orig
+                        val originLocation = LatLng(originLatitude, originLongitude)
+                        mMap!!.addMarker(MarkerOptions().position(originLocation)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+
+                        //mark dest
+                        val destinationLocation = LatLng(destinationLatitude, destinationLongitude)
+                        mMap!!.addMarker(MarkerOptions().position(destinationLocation))
+
+                        //get direction
+                        val routeMap = getDirectionURL(originLocation, destinationLocation, apiKey)
+                        GetDirection(routeMap).execute()
+                        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLocation, 14F))
+
+                        //open select car pax page
+                        rlCarPax.visibility = View.VISIBLE
+                        btn4paxCar.visibility = View.VISIBLE
+                        btn6paxCar.visibility = View.VISIBLE
+
+                        //close search location page
+                        btnSearchLocation.visibility = View.INVISIBLE
+                        locationSearch.visibility = View.INVISIBLE
+
                     } catch (e: IOException) {
+                        Toast.makeText(applicationContext, "Location not found", Toast.LENGTH_SHORT).show()
                         e.printStackTrace()
                     }
-                    val address = addressList!![0]
-                    destinationLatitude = address.latitude.toDouble()
-                    destinationLongitude = address.longitude.toDouble()
-
-                    //destination
-                    val destinationLocation = LatLng(destinationLatitude, destinationLongitude)
-                    mMap!!.addMarker(MarkerOptions().position(destinationLocation))
-
-
-                    //get direction
-                    //val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
-                    val urll = getDirectionURL(originLocation, destinationLocation)
-                    GetDirection(urll).execute()
-                    mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLocation, 14F))
-
-                    //open select car pax page
-                    rlCarPax.visibility = View.VISIBLE
-                    btn4paxCar.visibility = View.VISIBLE
-                    btn6paxCar.visibility = View.VISIBLE
-
-                    //close search location page
-                    btnSearchLocation.visibility = View.INVISIBLE
-                    locationSearch.visibility = View.INVISIBLE
 
                 }
+                locationSearch.text.clear()
             }
         }
+
 
         btn4paxCar.setOnClickListener{
             var paxCarNo = 4
@@ -198,7 +204,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
 
             //open confirm book page
-            tvDistCost.text = location + "\n" + strDis + "\n" + strCost// + "\n" + strTime
+            tvDistCost.text = location + "\n" + strDis + "\n" + strCost + "\n" + strTime
             tvDistCost.visibility = View.VISIBLE
             btnCancelBooking.visibility = View.VISIBLE
             btnBookCar.visibility = View.VISIBLE
@@ -237,16 +243,18 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         val btnBkCar = findViewById<Button>(R.id.btnBookCar)
         btnBkCar.setOnClickListener{
 
+
+
             val newPrivateCar = PrivateCarData("",originLatitude
                 ,originLongitude,destinationLatitude,destinationLongitude
-                ,paxCarNo, 10, totalDistance,totalCost,1)
+                ,paxCarNo, 10, totalDistance,totalCost,1, "123", true)
             addNewPrivateCar(newPrivateCar)
 
             val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)
             startActivity(intent)
 
-
         }
+
 
     }
     private fun addNewPrivateCar(newPrivateCar: PrivateCarData) {
@@ -268,7 +276,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
     override fun onMapReady(googleMap: GoogleMap) {
 
-        mMap = googleMap!!
+        mMap = googleMap
         val originLocation = LatLng(originLatitude, originLongitude)
         mMap!!.clear()
         mMap!!.addMarker(MarkerOptions().position(originLocation)
@@ -277,12 +285,13 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
     }
 
-    //private fun getDirectionURL(origin:LatLng, dest:LatLng, secret: String) : String{
-    private fun getDirectionURL(origin:LatLng, dest:LatLng) : String{
+
+    private fun getDirectionURL(origin:LatLng, dest:LatLng, secret: String) : String{
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}" +
             "&destination=${dest.latitude},${dest.longitude}" +
             "&sensor=false" +
-            "&mode=driving"
+            "&mode=driving" +
+            "&key=$secret"
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -378,7 +387,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     private fun calcTime(distance: Double): Int{
-        val timeH = distance / 20 //20km/h speed
+        val timeH = distance / 50 //50km/h
         val timeM = timeH * 60 //hour to mins
 
         val time = timeM.toInt()
