@@ -32,13 +32,6 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
 
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
 
-        binding.btnInsertPCA.setOnClickListener() {
-            val newPrivateCar = PrivateCarData("PCID00002",3.203493
-                ,101.713127,3.215976,101.729063
-                ,3, 5, 3.6,12.5,1
-                ,"4pV5OWacrCdKQJx8X66aLak96fB2",false)
-            addNewPrivateCar(newPrivateCar)
-        }
     }
     private fun readData() {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")

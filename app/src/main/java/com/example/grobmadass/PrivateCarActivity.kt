@@ -1,27 +1,50 @@
 package com.example.grobmadass
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Geocoder
+import android.location.LocationManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.grobmadass.adapter.PrivatecarcustomerAdapter
-import com.example.grobmadass.dataModels.PrivateCarData
 import com.example.grobmadass.databinding.ActivityPrivateCarBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.*
 import java.util.concurrent.Executors
-import java.util.jar.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.location.Location
+import android.provider.ContactsContract
+import android.provider.Settings
+import com.google.android.gms.location.*
+import java.security.Permission
+import java.security.Provider
+import java.util.*
+
 
 class PrivateCarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrivateCarBinding
     private lateinit var database: DatabaseReference
     private lateinit var custPhoneNum: String
+    private lateinit var waitPointN: String
+    private lateinit var waitPointE: String
+    private lateinit var desPointN: String
+    private lateinit var desPointE: String
+
+
+    //Declaring the needed Variables
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    val PERMISSION_ID = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,19 +55,23 @@ class PrivateCarActivity : AppCompatActivity() {
 
         readPrivateCarData(privateCarId)
 
-        binding.btnCallPCA.setOnClickListener(){
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        binding.btnCallPCA.setOnClickListener() {
             val telNo = Uri.parse("tel: $custPhoneNum")
             val intentCall: Intent = Intent(Intent.ACTION_DIAL, telNo)
             startActivity(intentCall)
         }
 
-        binding.btnAcceptPCA.setOnClickListener(){
+        binding.btnAcceptPCA.setOnClickListener() {
             changePrivateCarStatus(privateCarId)
             val intent = Intent(this, DriverPendingActivity::class.java)
-            intent.putExtra("privateCarId",privateCarId)
+            intent.putExtra("privateCarId", privateCarId)
             startActivity(intent)
         }
     }
+
+
 
     private fun changePrivateCarStatus(privateCarId: String) {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
@@ -63,8 +90,9 @@ class PrivateCarActivity : AppCompatActivity() {
         database.child(privateCarId).get().addOnSuccessListener { rec->
             if(rec != null){
                 val customerId = rec.child("customerId").value.toString()
-                binding.tvWaitLocPCA.text= rec.child("privateCarWaitGeoN").value.toString()+" "+rec.child("privateCarWaitGeoE").value.toString()
-                binding.tvDestinationLocPCA.text= rec.child("privateCarDesGeoN").value.toString()+", "+rec.child("privateCarDesGeoE").value.toString()
+
+                binding.tvWaitLocPCA.text = rec.child("privateCarWaitLoc").value.toString()
+                binding.tvDestinationLocPCA.text = rec.child("privateCarDecLoc").value.toString()
                 binding.tvTotalPaxPCA.text= rec.child("privateCarTotalPax").value.toString()
                 binding.tvTotalTimePCA.text= rec.child("privateCarTotalTime").value.toString()
                 binding.tvTotalDistancePCA.text= rec.child("privateCarTotalDistance").value.toString()
@@ -124,14 +152,4 @@ class PrivateCarActivity : AppCompatActivity() {
         })
     }
 
-    //check user permission
-    private fun checkPermission():Boolean{
-        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            return true
-        }
-        return false
-    }
-    //get user permissiom
-    //private fun
 }

@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tvWaitLoc_PCA"
-                android:layout_width="wrap_content"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textSize="16sp"
@@ -62,7 +62,7 @@
 
             <TextView
                 android:id="@+id/tvDestinationLoc_PCA"
-                android:layout_width="wrap_content"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textSize="16sp"
@@ -155,10 +155,10 @@
                 android:id="@+id/tvTotalPax_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="186dp"
+                android:layout_marginTop="24dp"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/btnCall_PCA"
-                app:layout_constraintTop_toBottomOf="@+id/btnCall_PCA" />
+                app:layout_constraintEnd_toEndOf="@+id/tvDestinationLoc_PCA"
+                app:layout_constraintTop_toBottomOf="@+id/tvDestinationLoc_PCA" />
 
             <TextView
                 android:id="@+id/tvCustName_PCA"

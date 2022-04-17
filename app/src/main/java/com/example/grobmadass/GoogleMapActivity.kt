@@ -44,6 +44,8 @@ import okhttp3.internal.format
 import org.slf4j.Marker
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
+import kotlin.collections.ArrayList
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var binding: ActivityPrivateCarBinding
@@ -55,7 +57,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
     private var originLongitude: Double = 101.7166
     private var destinationLatitude: Double = 3.2023
     private var destinationLongitude: Double = 101.7166
-
+    private var strAddressWaitLine: String = ""
+    private var strAddressDesLine: String = ""
     private var markerDest: Marker? = null
     private lateinit var database: DatabaseReference
 
@@ -138,6 +141,9 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
                         val address = addressList!![0]
                         destinationLatitude = address.latitude.toDouble()
                         destinationLongitude = address.longitude.toDouble()
+
+                        strAddressWaitLine = getLocation(originLatitude,originLongitude)
+                        strAddressDesLine = getLocation(destinationLatitude,destinationLongitude)
 
                         //mark origin
                         val originLocation = LatLng(originLatitude, originLongitude)
@@ -266,8 +272,10 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
             var privateCarId = "PCID00006"
 
             val newPrivateCar = PrivateCarData(privateCarId,originLatitude
-                ,originLongitude,destinationLatitude,destinationLongitude
-                ,paxCarNo, totalTime, totalDistance,totalCost,1, userReference.toString(), false, false)
+                ,originLongitude,strAddressWaitLine,destinationLatitude
+                ,destinationLongitude,strAddressDesLine,paxCarNo
+                ,totalTime, totalDistance,totalCost,1
+                ,userReference.toString(), false, false)
             addNewPrivateCar(newPrivateCar)
 
             val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)
@@ -464,7 +472,18 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         val user = auth.currentUser
         val userReference = databaseReference?.child(user?.uid!!)
 
+    }
 
+    private fun getLocation(lat: Double,long: Double):String{
+        var strAddressLine = ""
+
+        var geoCoder = Geocoder(this, Locale.getDefault())
+        var Adress = geoCoder.getFromLocation(lat,long,3)
+
+        strAddressLine = Adress.get(0).getAddressLine(0)
+
+        Log.d("Debug:","Address: " + strAddressLine)
+        return strAddressLine
     }
 
 }
