@@ -267,7 +267,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
 
             val newPrivateCar = PrivateCarData(privateCarId,originLatitude
                 ,originLongitude,destinationLatitude,destinationLongitude
-                ,paxCarNo, totalTime, totalDistance,totalCost,1, userReference.toString(), false, false)
+                ,paxCarNo, totalTime, totalDistance,totalCost,1, userReference.toString(), false, false, "")
             addNewPrivateCar(newPrivateCar)
 
             val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)

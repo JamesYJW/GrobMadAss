@@ -25,8 +25,8 @@ class BookingCarActivity : AppCompatActivity() {
         val privateCarId = intent.getStringExtra("privateCarId")!!//<<-- change to driver id
         readPrivateCarData(privateCarId)
 
-        val customHandler = Handler()
-        customHandler.postDelayed(updateTimerThread, 0)
+        //val customHandler = Handler()
+        //customHandler.postDelayed(updateTimerThread, 0)
 
 
 
