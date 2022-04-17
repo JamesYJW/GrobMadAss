@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.grobmadass">
-
+    <!-- PERMISSION FOR GOOGLE MAP SERVICES -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +16,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrobMadAss">
+        <activity
+            android:name=".CarpoolingCarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DriverPendingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrivateCarActivity"
+            android:exported="false" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".GoogleMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_google_map" />
+        <activity
+            android:name=".BookingCarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindcustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentSummaryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PromoCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />

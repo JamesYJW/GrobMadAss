@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FindcustomerActivity">
+
+    <TextView
+        android:id="@+id/tvPrivateCar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Private Car"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rvPrivateCar_FCA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+<!--        app:layout_constraintTop_toBottomOf="@+id/rvCarpooling_FCA" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPrivateCar_FCA"
+        android:layout_width="0dp"
+        android:layout_height="625dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrivateCar"
+        tools:listitem="@layout/privatecarcustomer_view" />
+
+    <Button
+        android:id="@+id/btnGoToPending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Go to pending"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rvPrivateCar_FCA" />
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rvCarpooling_FCA"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="230dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/Carpooling"-->
+<!--        tools:listitem="@layout/carpoolingcustomer_view" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

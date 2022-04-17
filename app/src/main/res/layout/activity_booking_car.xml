@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookingCarActivity">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@drawable/duck_searching" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewBookInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/gifImageView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/quantum_grey300"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvMsgFind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Finding your driver..."
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvOriginLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="30dp"
+            android:text="TextView"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvMsgFind"
+            app:layout_constraintStart_toStartOf="@+id/tvMsgFind"
+            app:layout_constraintTop_toBottomOf="@+id/tvMsgFind" />
+
+        <TextView
+            android:id="@+id/tvDistinationLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:textSize="14sp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/tvOriginLocation"
+            app:layout_constraintStart_toStartOf="@+id/tvOriginLocation"
+            app:layout_constraintTop_toBottomOf="@+id/tvOriginLocation" />
+
+        <TextView
+            android:id="@+id/tvCarPaxNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:textSize="14sp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/tvDistinationLocation"
+            app:layout_constraintStart_toStartOf="@+id/tvDistinationLocation"
+            app:layout_constraintTop_toBottomOf="@+id/tvDistinationLocation" />
+
+
+        <TextView
+            android:id="@+id/tvTotalDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:textSize="14sp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/tvCarPaxNo"
+            app:layout_constraintStart_toStartOf="@+id/tvCarPaxNo"
+            app:layout_constraintTop_toBottomOf="@+id/tvCarPaxNo" />
+
+        <TextView
+            android:id="@+id/tvTotalTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:textSize="14sp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance"
+            app:layout_constraintStart_toStartOf="@+id/tvTotalDistance"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance" />
+
+
+        <TextView
+            android:id="@+id/tvTotalCash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:textSize="14sp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/tvTotalTime"
+            app:layout_constraintStart_toStartOf="@+id/tvTotalTime"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotalTime" />
+
+        <Button
+            android:id="@+id/btnCancelFinding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/white"
+            android:text="Cancel"
+            android:textColor="#757575"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvTotalCash"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/tvTotalCash" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</RelativeLayout>
+
