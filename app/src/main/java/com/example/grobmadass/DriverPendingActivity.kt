@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.grobmadass.databinding.ActivityDriverPendingBinding
 import com.example.grobmadass.databinding.ActivityFindcustomerBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.concurrent.Executors
 
@@ -21,6 +22,12 @@ class DriverPendingActivity : AppCompatActivity() {
     private lateinit var custPhoneNum: String
     private lateinit var custWaitGeo: String
     private lateinit var custDesGeo: String
+
+    private lateinit var auth: FirebaseAuth
+
+    private var databaseReference : DatabaseReference? =null
+    private var database1 : FirebaseDatabase? =null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDriverPendingBinding.inflate(layoutInflater)
@@ -29,6 +36,10 @@ class DriverPendingActivity : AppCompatActivity() {
         val privateCarId = intent.getStringExtra("privateCarId")!!
 
         readPrivateCarData(privateCarId)
+
+        auth = FirebaseAuth.getInstance()
+        database1 = FirebaseDatabase.getInstance()
+        databaseReference = database1?.reference!!.child("userProfile")
 
         binding.btnDriveToWaitDPA.setOnClickListener(){
             val toWaitingPointURL = Uri.parse("http://maps.google.com/maps?saddr=3.202713,101.716791&daddr=${custWaitGeo}")
@@ -46,11 +57,12 @@ class DriverPendingActivity : AppCompatActivity() {
 
         binding.btnMarkAsDoneDPA.setOnClickListener(){
             changePrivateCarStatusToDone(privateCarId)
-
+            unLockSwitch()
         }
 
         binding.btnCancelDPA.setOnClickListener(){
             changePrivateCarStatusToCancel(privateCarId)
+            unLockSwitch()
         }
 
         binding.btnCallDPA.setOnClickListener(){
@@ -58,6 +70,11 @@ class DriverPendingActivity : AppCompatActivity() {
             val intentCall: Intent = Intent(Intent.ACTION_DIAL, telNo)
             startActivity(intentCall)
         }
+    }
+    private fun unLockSwitch(){
+        val currentUser = auth.currentUser
+        val currentUserDb = databaseReference?.child((currentUser?.uid!!))
+        currentUserDb?.child("hasOrder")?.setValue(false)
     }
 
     private fun changePrivateCarStatusToDes(privateCarId: String) {
@@ -105,10 +122,12 @@ class DriverPendingActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
         database.child(privateCarId).child("privateCarStatus")
             .setValue(1).addOnSuccessListener {
-                Toast.makeText(applicationContext, "Accepted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Canceled!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, FindcustomerActivity::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener { e ->
-                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Cancel reject!", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -119,9 +138,9 @@ class DriverPendingActivity : AppCompatActivity() {
             if(rec != null){
                 val customerId = rec.child("customerId").value.toString()
                 custWaitGeo = rec.child("privateCarWaitGeoN").value.toString()+","+rec.child("privateCarWaitGeoE").value.toString()
-                binding.tvWaitLocDPA.text = custWaitGeo
+                binding.tvWaitLocDPA.text = rec.child("privateCarWaitLoc").value.toString()
                 custDesGeo = rec.child("privateCarDesGeoN").value.toString()+","+rec.child("privateCarDesGeoE").value.toString()
-                binding.tvDestinationLocDPA.text = custDesGeo
+                binding.tvDestinationLocDPA.text = rec.child("privateCarDecLoc").value.toString()
                 binding.tvTotalPaxDPA.text = rec.child("privateCarTotalPax").value.toString()
                 binding.tvTotalPriceDPA.text = rec.child("privateCarTotalPrice").value.toString()
 

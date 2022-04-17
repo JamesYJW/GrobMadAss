@@ -6,14 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PrivateCarActivity">
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -40,6 +44,7 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/textView38"
                 android:layout_width="wrap_content"
@@ -51,14 +56,6 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView32"
                 app:layout_constraintTop_toBottomOf="@+id/textView32" />
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView2"
-                android:layout_width="323dp"
-                android:layout_height="215dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintStart_toStartOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28"
-                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/tvDestinationLoc_PCA"
@@ -82,10 +79,11 @@
                 android:id="@+id/tvTotalDistance_PCA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="264dp"
+                android:layout_marginTop="24dp"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/tvTotalPax_PCA"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_PCA" />
+                app:layout_constraintEnd_toEndOf="@+id/btnViewInGoogle_PCA"
+                app:layout_constraintTop_toBottomOf="@+id/btnViewInGoogle_PCA" />
+
             <Button
                 android:id="@+id/btnAccept_PCA"
                 android:layout_width="wrap_content"
@@ -116,29 +114,32 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/ivUserProfile_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/ivUserProfile_PCA" />
+
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="264dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="4dp"
                 android:text="Total Distance:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvTotalDistance_PCA"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalPax_PCA" />
+                app:layout_constraintTop_toBottomOf="@+id/btnViewInGoogle_PCA" />
+
             <TextView
                 android:id="@+id/textView32"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="264dp"
+                android:layout_marginTop="24dp"
                 android:text="Total Time:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+                app:layout_constraintStart_toStartOf="@+id/btnViewInGoogle_PCA"
+                app:layout_constraintTop_toBottomOf="@+id/btnViewInGoogle_PCA" />
+
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="wrap_content"
@@ -174,10 +175,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="264dp"
+                android:layout_marginTop="24dp"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/textView32"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+                app:layout_constraintTop_toBottomOf="@+id/btnViewInGoogle_PCA" />
 
             <TextView
                 android:id="@+id/tvTotalPrice_PCA"
@@ -187,6 +188,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance_PCA" />
+
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
@@ -198,6 +200,15 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/tvWaitLoc_PCA"
                 app:layout_constraintTop_toBottomOf="@+id/tvWaitLoc_PCA" />
+
+            <Button
+                android:id="@+id/btnViewInGoogle_PCA"
+                android:layout_width="325dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Click To View Rout"
+                app:layout_constraintStart_toStartOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

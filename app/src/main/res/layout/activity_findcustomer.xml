@@ -41,6 +41,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rvPrivateCar_FCA" />
 
+    <Button
+        android:id="@+id/btnSwitchToCust_FCA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="switch to user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rvPrivateCar_FCA" />
+
     <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/rvCarpooling_FCA"-->
 <!--        android:layout_width="0dp"-->

@@ -5,16 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DriverPendingActivity">
-
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-126dp">
     <TextView
         android:id="@+id/tvTotalPax_DPA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/btnCall_DPA"
-        app:layout_constraintTop_toBottomOf="@+id/btnCall_DPA" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDestinationLoc_DPA" />
 
     <TextView
         android:id="@+id/textView16"
@@ -63,7 +76,7 @@
 
     <TextView
         android:id="@+id/tvDestinationLoc_DPA"
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="16sp"
@@ -84,7 +97,7 @@
 
     <TextView
         android:id="@+id/tvWaitLoc_DPA"
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="16sp"
@@ -171,5 +184,6 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

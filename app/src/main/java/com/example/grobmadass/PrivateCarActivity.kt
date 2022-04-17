@@ -26,6 +26,7 @@ import android.location.Location
 import android.provider.ContactsContract
 import android.provider.Settings
 import com.google.android.gms.location.*
+import com.google.firebase.auth.FirebaseAuth
 import java.security.Permission
 import java.security.Provider
 import java.util.*
@@ -35,16 +36,13 @@ class PrivateCarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrivateCarBinding
     private lateinit var database: DatabaseReference
     private lateinit var custPhoneNum: String
-    private lateinit var waitPointN: String
-    private lateinit var waitPointE: String
-    private lateinit var desPointN: String
-    private lateinit var desPointE: String
+    private lateinit var auth: FirebaseAuth
 
+    private lateinit var  custWaitGeo: String
+    private lateinit var  custDesGeo: String
 
-    //Declaring the needed Variables
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    val PERMISSION_ID = 123
+    private var databaseReference : DatabaseReference? =null
+    private var database1 : FirebaseDatabase? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +50,12 @@ class PrivateCarActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val privateCarId = intent.getStringExtra("privateCarId")!!//<<-- change to driver id
-
+        auth = FirebaseAuth.getInstance()
         readPrivateCarData(privateCarId)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        auth = FirebaseAuth.getInstance()
+        database1 = FirebaseDatabase.getInstance()
+        databaseReference = database1?.reference!!.child("userProfile")
 
         binding.btnCallPCA.setOnClickListener() {
             val telNo = Uri.parse("tel: $custPhoneNum")
@@ -65,15 +65,33 @@ class PrivateCarActivity : AppCompatActivity() {
 
         binding.btnAcceptPCA.setOnClickListener() {
             changePrivateCarStatus(privateCarId)
+            saveToBookCar(privateCarId)
+            lockSwitch()
             val intent = Intent(this, DriverPendingActivity::class.java)
             intent.putExtra("privateCarId", privateCarId)
             startActivity(intent)
         }
+
+        binding.btnViewInGooglePCA.setOnClickListener {
+            val toDesPointURL = Uri.parse("http://maps.google.com/maps?saddr=${custWaitGeo}&daddr=${custDesGeo}")
+            val intentMap: Intent = Intent(Intent.ACTION_VIEW, toDesPointURL )
+            startActivity(intentMap)
+        }
     }
 
+    private fun saveToBookCar(privateCarId: String) {
 
+    }
+
+    private fun lockSwitch(){
+        val currentUser = auth.currentUser
+        val currentUserDb = databaseReference?.child((currentUser?.uid!!))
+        currentUserDb?.child("hasOrder")?.setValue(true)
+    }
 
     private fun changePrivateCarStatus(privateCarId: String) {
+
+        val userId = auth.currentUser
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
         database.child(privateCarId).child("privateCarStatus")
             .setValue(2).addOnSuccessListener {
@@ -82,6 +100,14 @@ class PrivateCarActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
             }
+        database.child(privateCarId).child("driverId")
+            .setValue(userId?.uid!!).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Accepted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+            }
+
     }
 
     private fun readPrivateCarData(privateCarId: String) {
@@ -90,7 +116,8 @@ class PrivateCarActivity : AppCompatActivity() {
         database.child(privateCarId).get().addOnSuccessListener { rec->
             if(rec != null){
                 val customerId = rec.child("customerId").value.toString()
-
+                custWaitGeo = rec.child("privateCarWaitGeoN").value.toString()+","+rec.child("privateCarWaitGeoE").value.toString()
+                custDesGeo = rec.child("privateCarDesGeoN").value.toString()+","+rec.child("privateCarDesGeoE").value.toString()
                 binding.tvWaitLocPCA.text = rec.child("privateCarWaitLoc").value.toString()
                 binding.tvDestinationLocPCA.text = rec.child("privateCarDecLoc").value.toString()
                 binding.tvTotalPaxPCA.text= rec.child("privateCarTotalPax").value.toString()

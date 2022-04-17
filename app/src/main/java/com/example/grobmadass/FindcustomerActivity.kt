@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grobmadass.adapter.PrivatecarcustomerAdapter
 import com.example.grobmadass.dataModels.PrivateCarData
 import com.example.grobmadass.databinding.ActivityFindcustomerBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 
@@ -18,6 +19,12 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
     private lateinit var privateCarList: ArrayList<PrivateCarData>
 
     private var context = this
+
+    private lateinit var auth: FirebaseAuth
+    private var databaseReference : DatabaseReference? =null
+    private var database1 : FirebaseDatabase? =null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFindcustomerBinding.inflate(layoutInflater)
@@ -26,12 +33,37 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
         privateCarList = arrayListOf()
         readData()
 
+        auth = FirebaseAuth.getInstance()
+        database1 = FirebaseDatabase.getInstance()
+        databaseReference = database1?.reference!!.child("userProfile")
 
         binding.rvPrivateCarFCA.layoutManager = LinearLayoutManager(applicationContext)
         binding.rvPrivateCarFCA.setHasFixedSize(true)
 
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
 
+        binding.btnSwitchToCustFCA.setOnClickListener {
+
+            val currentUser = auth.currentUser
+            val currentUserDb = databaseReference?.child((currentUser?.uid!!))
+
+            currentUserDb!!.child("hasOrder").get().addOnSuccessListener {
+                if(it.value == false){
+                    Toast.makeText(applicationContext, "Switch To Customer", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, GoogleMapActivity::class.java)
+                    startActivity(intent)
+                }
+                else{
+                    Toast.makeText(applicationContext, "You has A Order Haven't Done!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.btnGoToPending.setOnClickListener {
+//            val intent = Intent(this, DriverPendingActivity::class.java)
+//            intent.putExtra("privateCarId", privateCarId)
+//            startActivity(intent)
+        }
     }
     private fun readData() {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
@@ -66,16 +98,5 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
         startActivity(intent)
     }
 
-
-    private fun addNewPrivateCar(newPrivateCar: PrivateCarData) {
-        database.child(newPrivateCar.privateCarId)
-            .setValue(newPrivateCar).addOnSuccessListener {
-                Toast.makeText(applicationContext, "added", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(applicationContext, "no", Toast.LENGTH_SHORT).show()
-
-            }
-    }
 
 }

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/picCust_PCCV"
-        android:layout_width="65dp"
-        android:layout_height="62dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -25,33 +25,32 @@
         android:id="@+id/tvTotalPax_PCCV"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
         android:text="Pax"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tvDestination_PCCV"
+        app:layout_constraintStart_toEndOf="@+id/tvCustName_PCCV"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvDestination_PCCV"
-        android:layout_width="200dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
         android:text="Destination"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvCustName_PCCV" />
+        app:layout_constraintStart_toStartOf="@+id/tvCustName_PCCV"
+        app:layout_constraintTop_toBottomOf="@+id/tvCustName_PCCV" />
 
     <TextView
         android:id="@+id/tvCustName_PCCV"
-        android:layout_width="200dp"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="CustomerName"
         android:textColor="@color/black"
         android:textSize="16sp"

@@ -2,23 +2,20 @@ package com.example.grobmadass.adapter
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.location.Geocoder
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.grobmadass.FindcustomerActivity
 import com.example.grobmadass.R
 import com.example.grobmadass.dataModels.PrivateCarData
 import com.google.firebase.database.*
-import java.util.*
 import java.util.concurrent.Executors
-import kotlin.collections.ArrayList
+
+
 
 
 class PrivatecarcustomerAdapter(private val privateCarlist: ArrayList<PrivateCarData>, private val listener:onItemClcikListener) : RecyclerView.Adapter<PrivatecarcustomerAdapter.myViewHolder>() {
@@ -57,9 +54,8 @@ class PrivatecarcustomerAdapter(private val privateCarlist: ArrayList<PrivateCar
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val currentPrivateCar = privateCarlist[position]
         val custID = currentPrivateCar.customerId
-        holder.tvDestionation.text = currentPrivateCar.privateCarDesGeoN.toString() +" "+ currentPrivateCar.privateCarDesGeoE.toString()
+        holder.tvDestionation.text = currentPrivateCar.privateCarDecLoc.toString()
         holder.tvTotalPax.text = currentPrivateCar.privateCarTotalPax.toString() + " PAX"
-
 
         // get customer name
         database = FirebaseDatabase.getInstance().getReference("userProfile")
@@ -107,4 +103,7 @@ class PrivatecarcustomerAdapter(private val privateCarlist: ArrayList<PrivateCar
     override fun getItemCount(): Int {
         return privateCarlist.size
     }
+
+
+
 }
