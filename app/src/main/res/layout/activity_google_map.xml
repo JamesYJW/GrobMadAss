@@ -120,8 +120,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:text="User profile"
-        android:visibility="invisible" />
+        android:text="User profile" />
 
     <RelativeLayout
         android:id="@+id/rlDriverProfile"

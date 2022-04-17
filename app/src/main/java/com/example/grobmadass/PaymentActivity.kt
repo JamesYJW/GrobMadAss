@@ -31,7 +31,8 @@ class PaymentActivity : AppCompatActivity() {
 
         val buttonAddPromo : ImageView = binding.btnApplyPromoCodeIcon
         val buttonMakePayment : Button = binding.btnMakePayment
-        val pcID:String ="PCID00001"
+        val privateCarId = intent.getStringExtra("privateCarId")!!
+        val pcID:String = privateCarId
         database.child(pcID).get().addOnSuccessListener {
             binding.textViewPricingCar.text = it.child("privateCarId").value.toString()
             binding.textViewPricingKM.text = it.child("privateCarTotalDistance").value.toString()
