@@ -3,6 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/Desktop/GrobMadAss/app/src/main/res/layout/activity_driver_registration.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/Desktop/GrobMadAss/app/src/main/res/layout/activity_forgot_password.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/Desktop/GrobMadAss/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/Desktop/GrobMadAss/app/src/main/res/layout/activity_main.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/User/Desktop/GrobMadAss/app/src/main/res/layout/activity_registration.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/User/Desktop/GrobMadAss/app/src/main/res/layout/activity_user_profile.xml" value="0.25416666666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14_PREVIEW" project-jdk-name="14" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
         <entry key="..\:/Homework/Year3 Sem3/Mobile/GrobMadAss/app/src/main/res/drawable/add_promo_icon.xml" value="0.22760416666666666" />
         <entry key="..\:/Homework/Year3 Sem3/Mobile/GrobMadAss/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22760416666666666" />
         <entry key="..\:/Homework/Year3 Sem3/Mobile/GrobMadAss/app/src/main/res/layout/activity_booking_car.xml" value="0.22" />
