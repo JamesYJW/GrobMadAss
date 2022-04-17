@@ -25,12 +25,16 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
+import com.example.grobmadass.dataModels.PrivateCarData
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.internal.format
 import org.slf4j.Marker
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
@@ -49,7 +53,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
     private var destinationLongitude: Double = 101.7166
 
     private var markerDest: Marker? = null
-
+    private lateinit var database: DatabaseReference
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,12 +67,18 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         val btn4paxCar = findViewById<Button>(R.id.btn4paxCar)
         val btn6paxCar = findViewById<Button>(R.id.btn6paxCar)
 
-        val tvDistCost = findViewById<TextView>(R.id.tvDistCost)
+        val tvDistCost = findViewById<TextView>(R.id.tvBookInfo)
         val btnCancelBooking = findViewById<Button>(R.id.btnCancelBooking)
         val btnBookCar = findViewById<Button>(R.id.btnBookCar)
 
         var paxCarNo:Int = 0
+        var totalDistance:Double = 0.0
+        var totalCost:Double = 0.0
+        var totalTime:Int = 0
         var location: String? = null
+
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+
 
         //open search location page
         btnSearchLocation.visibility = View.VISIBLE
@@ -145,18 +155,22 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
         btn4paxCar.setOnClickListener{
-            paxCarNo = 4
+            var paxCarNo = 4
 
-            var distance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
-            val formatKm = DecimalFormat("#0.0000")
-            var strDis = "" + formatKm.format(distance) + "km"
+            var totalDistance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
+            var formatKm = DecimalFormat("#0.0000")
+            var strDis = "" + formatKm.format(totalDistance) + "km"
 
-            var cost = calcCost(distance, paxCarNo)
-            val formatRm = DecimalFormat("##0.00")
-            var strCost = "RM " + formatRm.format(cost)
+            var totalCost = calcCost(totalDistance, paxCarNo)
+            var formatRm = DecimalFormat("##0.00")
+            var strCost = "RM " + formatRm.format(totalCost)
+
+            var totalTime = calcTime(totalDistance)
+            var strTime = "" +totalTime + " minutes"
+
 
             //open confirm book page
-            tvDistCost.text = location + "\n" + strDis + "\n" + strCost
+            tvDistCost.text = location + "\n" + strDis + "\n" + strCost + "\n" + strTime
             tvDistCost.visibility = View.VISIBLE
             btnCancelBooking.visibility = View.VISIBLE
             btnBookCar.visibility = View.VISIBLE
@@ -169,18 +183,22 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
         btn6paxCar.setOnClickListener{
-            paxCarNo = 6
+            var paxCarNo = 6
 
-            var distance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
-            val formatKm = DecimalFormat("#0.0000")
-            var strDis = "" + formatKm.format(distance) + "km"
+            var totalDistance = calcDistance(originLatitude, originLongitude, destinationLatitude, destinationLongitude)
+            var formatKm = DecimalFormat("#0.000")
+            var strDis = "" + formatKm.format(totalDistance) + "km"
 
-            var cost = calcCost(distance, paxCarNo)
-            val formatRm = DecimalFormat("##0.00")
-            var strCost = "RM " + formatRm.format(cost)
+            var totalCost = calcCost(totalDistance, paxCarNo)
+            var formatRm = DecimalFormat("##0.00")
+            var strCost = "RM " + formatRm.format(totalCost)
+
+            var totalTime = calcTime(totalDistance)
+            var strTime = "" +totalTime + " minutes"
+
 
             //open confirm book page
-            tvDistCost.text = location + "\n" + strDis + "\n" + strCost
+            tvDistCost.text = location + "\n" + strDis + "\n" + strCost// + "\n" + strTime
             tvDistCost.visibility = View.VISIBLE
             btnCancelBooking.visibility = View.VISIBLE
             btnBookCar.visibility = View.VISIBLE
@@ -195,7 +213,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         btnCnlBook.setOnClickListener{
 
             val locationSearch = findViewById<EditText>(R.id.etLocation)
-            val tvDNC = findViewById<TextView>(R.id.tvDistCost)
+            val tvDNC = findViewById<TextView>(R.id.tvBookInfo)
             val btnBkCar = findViewById<Button>(R.id.btnBookCar)
 
             mapFragment.getMapAsync {
@@ -218,10 +236,34 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         }
         val btnBkCar = findViewById<Button>(R.id.btnBookCar)
         btnBkCar.setOnClickListener{
+
+            val newPrivateCar = PrivateCarData("",originLatitude
+                ,originLongitude,destinationLatitude,destinationLongitude
+                ,paxCarNo, 10, totalDistance,totalCost,1)
+            addNewPrivateCar(newPrivateCar)
+
             val intent = Intent(this@GoogleMapActivity, BookingCarActivity::class.java)
             startActivity(intent)
+
+
         }
 
+    }
+    private fun addNewPrivateCar(newPrivateCar: PrivateCarData) {
+//        database.child("PrivateCar").child(newPrivateCar.privateCarId)
+//            .setValue(newPrivateCar).addOnSuccessListener {
+//                binding.tvStatus.text = "Added"
+//            }
+//            .addOnFailureListener { e ->
+//                binding.tvStatus.text = e.message
+//            }
+        database.child(newPrivateCar.privateCarId)
+            .setValue(newPrivateCar).addOnSuccessListener {
+                Toast.makeText(applicationContext, "Added", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -334,6 +376,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback{
         val cost = distance * 1.2 * pax
         return cost
     }
+
+    private fun calcTime(distance: Double): Int{
+        val timeH = distance / 20 //20km/h speed
+        val timeM = timeH * 60 //hour to mins
+
+        val time = timeM.toInt()
+        return time
+    }
+
 
     private fun closeKeyBoard() {
         val view = this.currentFocus
