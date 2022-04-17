@@ -41,6 +41,9 @@
             android:name=".FindcustomerActivity"
             android:exported="false" />
 <!--            android:label="@string/title_activity_google_map" />-->
+            android:name=".GoogleMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_google_map" />
         <activity
             android:name=".BookingCarActivity"
             android:exported="false" />

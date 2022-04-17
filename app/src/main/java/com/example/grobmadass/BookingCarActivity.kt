@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import com.example.grobmadass.databinding.ActivityBookingCarBinding
 import com.example.grobmadass.databinding.ActivityUserProfileBinding
@@ -16,6 +17,11 @@ class BookingCarActivity : AppCompatActivity() {
     private lateinit var binding:ActivityBookingCarBinding
     private lateinit var database: DatabaseReference
 
+    var handler: Handler = Handler()
+    var runnable: Runnable? = null
+    var delay = 1000
+    var priID = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -24,10 +30,11 @@ class BookingCarActivity : AppCompatActivity() {
 
         val privateCarId = intent.getStringExtra("privateCarId")!!//<<-- change to driver id
         readPrivateCarData(privateCarId)
+        priID = privateCarId
+        //val customHandler = Handler()
+        //customHandler.postDelayed(updateTimerThread, 0)
 
-        val customHandler = Handler()
-        customHandler.postDelayed(updateTimerThread, 0)
-
+        //finish()
 
 
         binding.btnCancelFinding.setOnClickListener(){
@@ -36,6 +43,10 @@ class BookingCarActivity : AppCompatActivity() {
             database.child(privateCarId).child("findCancel")
                 .setValue(true).addOnSuccessListener {
                     Toast.makeText(applicationContext, "Booking Cancelled", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this@BookingCarActivity, GoogleMapActivity::class.java)
+                    startActivity(intent)
+
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(applicationContext, "Cancelled Fail", Toast.LENGTH_SHORT).show()
@@ -45,10 +56,33 @@ class BookingCarActivity : AppCompatActivity() {
 
         //val intent = Intent(this@BookingCarActivity, GoogleMapActivity::class.java)
         //startActivity(intent)
-
-
     }
 
+    override fun onResume() {
+        handler.postDelayed(Runnable {
+            handler.postDelayed(runnable!!, delay.toLong())
+            if(priID != null){
+                readStatus(priID)
+
+            }
+        }.also { runnable = it }, delay.toLong())
+        super.onResume()
+    }
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable!!)
+    }
+
+    private fun readStatus(privateCarId: String){
+        database = FirebaseDatabase.getInstance().getReference("PrivateCar")
+        database.child(privateCarId).child("privateCarStatus").get().addOnSuccessListener { rec->
+            if (rec.value.toString() == "2"){
+                finish()
+            }else{
+                //Toast.makeText(applicationContext, "Error!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun readPrivateCarData(privateCarId: String) {
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
@@ -56,12 +90,13 @@ class BookingCarActivity : AppCompatActivity() {
         database.child(privateCarId).get().addOnSuccessListener { rec->
             if(rec != null){
                 val customerId = rec.child("customerId").value.toString()
-                binding.tvOriginLocation.text= rec.child("privateCarWaitGeoN").value.toString()+" "+rec.child("privateCarWaitGeoE").value.toString()
-                binding.tvDistinationLocation.text= rec.child("privateCarDesGeoN").value.toString()+", "+rec.child("privateCarDesGeoE").value.toString()
-                binding.tvCarPaxNo.text= rec.child("privateCarTotalPax").value.toString()
-                binding.tvTotalTime.text= rec.child("privateCarTotalTime").value.toString()
-                binding.tvTotalDistance.text= rec.child("privateCarTotalDistance").value.toString()
-                binding.tvTotalCash.text= rec.child("privateCarTotalPrice").value.toString()
+
+                binding.tvOriginLocation.text= "From " + rec.child("privateCarWaitLoc").value.toString()
+                binding.tvDistinationLocation.text= "To " + rec.child("privateCarDecLoc").value.toString()
+                binding.tvCarPaxNo.text= rec.child("privateCarTotalPax").value.toString() + " pax"
+                binding.tvTotalTime.text= rec.child("privateCarTotalTime").value.toString() + " minutes"
+                binding.tvTotalDistance.text= rec.child("privateCarTotalDistance").value.toString() + " km"
+                binding.tvTotalCash.text= "RM " + rec.child("privateCarTotalPrice").value.toString()
 
             }
             else{
@@ -78,6 +113,8 @@ class BookingCarActivity : AppCompatActivity() {
             customHandler.postDelayed(this, 1000)
         }
     }
+
+
 
 }
 
