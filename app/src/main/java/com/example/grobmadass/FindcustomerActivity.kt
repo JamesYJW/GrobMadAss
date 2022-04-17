@@ -24,6 +24,7 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
     private var databaseReference : DatabaseReference? =null
     private var database1 : FirebaseDatabase? =null
 
+    private lateinit var database2: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +61,17 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
         }
 
         binding.btnGoToPending.setOnClickListener {
-//            val intent = Intent(this, DriverPendingActivity::class.java)
-//            intent.putExtra("privateCarId", privateCarId)
-//            startActivity(intent)
+            database = FirebaseDatabase.getInstance().getReference("userProfile")
+            val currentUser = auth.currentUser
+            var privateCarId = ""
+            database.child(currentUser?.uid!!).get().addOnSuccessListener { rec->
+                if(rec != null){
+                    privateCarId = rec.child("privateCarId").value.toString()
+                    val intent = Intent(this, DriverPendingActivity::class.java)
+                    intent.putExtra("privateCarId", privateCarId)
+                    startActivity(intent)
+                }
+            }
         }
     }
     private fun readData() {

@@ -44,6 +44,8 @@ class PrivateCarActivity : AppCompatActivity() {
     private var databaseReference : DatabaseReference? =null
     private var database1 : FirebaseDatabase? =null
 
+    private lateinit var database2: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivateCarBinding.inflate(layoutInflater)
@@ -52,7 +54,6 @@ class PrivateCarActivity : AppCompatActivity() {
         val privateCarId = intent.getStringExtra("privateCarId")!!//<<-- change to driver id
         auth = FirebaseAuth.getInstance()
         readPrivateCarData(privateCarId)
-
         auth = FirebaseAuth.getInstance()
         database1 = FirebaseDatabase.getInstance()
         databaseReference = database1?.reference!!.child("userProfile")
@@ -65,7 +66,7 @@ class PrivateCarActivity : AppCompatActivity() {
 
         binding.btnAcceptPCA.setOnClickListener() {
             changePrivateCarStatus(privateCarId)
-            saveToBookCar(privateCarId)
+            saveToUserProfile(privateCarId)
             lockSwitch()
             val intent = Intent(this, DriverPendingActivity::class.java)
             intent.putExtra("privateCarId", privateCarId)
@@ -79,8 +80,10 @@ class PrivateCarActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToBookCar(privateCarId: String) {
-
+    private fun saveToUserProfile(privateCarId: String) {
+        val currentUser = auth.currentUser
+        val currentUserDb = databaseReference?.child((currentUser?.uid!!))
+        currentUserDb?.child("privateCarId")?.setValue(privateCarId)
     }
 
     private fun lockSwitch(){
@@ -90,7 +93,6 @@ class PrivateCarActivity : AppCompatActivity() {
     }
 
     private fun changePrivateCarStatus(privateCarId: String) {
-
         val userId = auth.currentUser
         database = FirebaseDatabase.getInstance().getReference("PrivateCar")
         database.child(privateCarId).child("privateCarStatus")
@@ -107,7 +109,6 @@ class PrivateCarActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
             }
-
     }
 
     private fun readPrivateCarData(privateCarId: String) {
@@ -180,3 +181,4 @@ class PrivateCarActivity : AppCompatActivity() {
     }
 
 }
+

@@ -107,7 +107,7 @@ class UserProfileActivity : AppCompatActivity() {
                if(snapshot.child("Driving License Number").exists())
                {
                    //this one need to change it to JAMES DRIVER PAGE
-                   startActivity(Intent(this@UserProfileActivity,MainActivity::class.java))
+                   startActivity(Intent(this@UserProfileActivity,FindcustomerActivity::class.java))
                    //finish()
                }
                 else{

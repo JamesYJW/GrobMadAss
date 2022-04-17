@@ -75,6 +75,8 @@ class DriverPendingActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         val currentUserDb = databaseReference?.child((currentUser?.uid!!))
         currentUserDb?.child("hasOrder")?.setValue(false)
+        currentUserDb?.child("privateCarId")?.removeValue()
+
     }
 
     private fun changePrivateCarStatusToDes(privateCarId: String) {
