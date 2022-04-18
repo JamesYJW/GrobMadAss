@@ -82,7 +82,7 @@ class FindcustomerActivity : AppCompatActivity(), PrivatecarcustomerAdapter.onIt
                 if (snapshot.exists()){
                     privateCarList = arrayListOf()
                     for (privateCarSnapshot in snapshot.children){
-                        if(privateCarSnapshot.child("privateCarStatus").value.toString() == "1"){
+                        if(privateCarSnapshot.child("privateCarStatus").value.toString() == "1"&& privateCarSnapshot.child("findCancel").value == false){
                             val priCar = privateCarSnapshot.getValue(PrivateCarData::class.java)
                             privateCarList.add(priCar!!)
                         }

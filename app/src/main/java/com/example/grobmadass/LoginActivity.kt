@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         val currentuser = auth.currentUser
-        if(currentuser!=null && binding.rememberMecheckBox.isChecked){
+        if(currentuser!=null || binding.rememberMecheckBox.isChecked){
             startActivity(Intent(this@LoginActivity,UserProfileActivity::class.java))
             finish()
         }
